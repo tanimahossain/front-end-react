@@ -1,5 +1,4 @@
 import './App.css';
-import { GetDate } from './DateFormat.js';
 import Preview from './StoryListPreview.js';
 function Story(props) {
     return (
@@ -8,34 +7,23 @@ function Story(props) {
                 <div className="story">
                     <Preview
                         storyTitle={props.story.storyTitle}
+                        createdAt={props.story.createdAt}
+                        updatedAt={props.story.updatedAt}
                     />
                     <div className="story-info">
-                        <div>
+                        <div className="storyTitle">
+                            <h3>
+                                {props.story.storyTitle}
+                            </h3>
                             <a href="#">
                                 <span className="authorName">
                                     Author:{' '}
                                     {props.story.authorName}
                                 </span>
                             </a>
-                            <div className="storyDate-container">
-                                <span className="storyDate-text">
-                                    Upload date:{' '}
-                                    {GetDate(
-                                        props.story
-                                            .createdAt
-                                    )}{' '}
-                                    | Last Update date:
-                                    {GetDate(
-                                        props.story
-                                            .updatedAt
-                                    )}
-                                </span>
-                            </div>
                         </div>
-                        <div>
-                            <h3>
-                                {props.story.openingLines}
-                            </h3>
+                        <div className="storyBody">
+                            {props.story.openingLines}
                         </div>
                     </div>
                 </div>

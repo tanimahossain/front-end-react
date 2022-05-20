@@ -1,3 +1,10 @@
+:root {
+  --bodyBackgroundColor: #b9dce2;
+  --bodyBackgroundColor1: #9ee1ec;
+  --cardShadowColor: #83acb3;
+  --navBarColor: #14365d;
+  --storyTitleColor: #75a4ac;
+}
 .App {
   text-align: center;
 }
@@ -41,41 +48,49 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: cursive;
 }
 
 body {
-  background-image: linear-gradient(45deg, #f6faf2, #f3f9ec);
+  background-image: linear-gradient(
+    45deg,
+    var(--bodyBackgroundColor),
+    var(--bodyBackgroundColor1)
+  );
   font-family: "Muli", sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100px;
   margin: 0;
 }
 
+.stories-container {
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: auto;
+  padding: 20px;
+}
 .story {
   background-color: #fff;
-  border-radius: 10px;
-  border: #3f398c;
-  border-width: 1px;
+  border: var(--navBarColor);
+  border-width: 0px;
   border-style: solid inset;
-  box-shadow: 3px 3px 10px #b1d195;
-  display: flex;
-  margin: 10px auto auto auto;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px var(--cardShadowColor);
+  display: grid;
+  grid-template-columns: 20% 80%;
+  margin: auto auto auto auto;
   align-content: center;
   overflow: hidden;
-  width: 70%;
+  width: 90%;
   height: 100%;
   align-self: center;
 }
 .story:hover {
-  box-shadow: 5px 5px 10px 5px #a2bd8c;
-}
-.stories-container {
-  align-items: center;
-  justify-content: center;
-  height: 250px;
-  margin: auto;
-  padding: 10px;
+  box-shadow: 5px 5px 10px 5px #83acb3;
 }
 .story h6 {
   opacity: 0.6;
@@ -90,10 +105,11 @@ body {
 }
 
 .story-preview {
-  background-color: #2a265f;
+  background-color: var(--navBarColor);
   color: #fff;
-  padding: 30px;
-  width: 30%;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
   max-width: 250px;
 }
 
@@ -111,14 +127,13 @@ body {
 .story-preview a:hover {
   text-decoration: underline;
 }
+.storyTitle {
+  color: var(--storyTitleColor);
+}
 .story-info {
-  padding: 30px;
+  padding: 20px;
   position: relative;
   width: 100%;
-  border-radius: 0px 10px 10px 0px;
-  border: #2a265f;
-  border-width: 1px;
-  border-style: solid;
 }
 .authorName {
   text-decoration: underline;
@@ -143,21 +158,19 @@ body {
   top: 0;
   left: 0;
   height: 5px;
-  width: 66%;
 }
 
 .storyDate-text {
-  font-size: 12px;
-  font-family: cursive;
+  font-size: 13px;
   opacity: 0.7;
-  letter-spacing: 1px;
+  letter-spacing: 0px;
 }
 
 nav {
   display: block;
   width: 100%;
-  background-color: #2a265f;
-  padding: 10px;
+  height: 48px;
+  background-color: var(--navBarColor);
   margin: 0px;
 }
 
@@ -181,8 +194,18 @@ nav {
 }
 .wrap {
   padding: 0px;
+  align-self: stretch;
 }
 .FlexStoryList {
   display: flex;
   flex-direction: column;
+  padding-top: 15px;
+}
+.seeFullStory {
+  font-size: 12px;
+}
+.storyBody {
+  float: inline-end;
+  padding-top: 30px;
+  font-size: 16px;
 }

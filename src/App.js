@@ -3,7 +3,7 @@ import Navbar from './Navbar.js';
 import Stories from './StoryList.js';
 function App() {
     return (
-        <div className="wrap">
+        <div>
             <Navbar />
             <Stories />
         </div>

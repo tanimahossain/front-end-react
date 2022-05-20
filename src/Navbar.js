@@ -3,13 +3,10 @@ import './App.css';
 import logo from './appLogo.png';
 function Navbar() {
     return (
-        <div className="wrap">
+        <div>
             <nav>
                 <img src={logo}></img>
-                <a
-                    href="/signuplogin/"
-                    className="navSignUpLogIn"
-                >
+                <a href="/auth/" className="navSignUpLogIn">
                     <span className="icon">
                         <FaRegUser />
                     </span>
