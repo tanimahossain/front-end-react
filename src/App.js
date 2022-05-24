@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import HomePage from './Pages/HomePage.js';
+import ProfilePage from './Pages/ProfilePage.js';
+import SignUpLogIn from './Pages/SignUpLogIn';
 import StoryDetails from './Pages/StoryDetails.js';
 function App() {
     return (
@@ -17,9 +19,19 @@ function App() {
                     element={<HomePage />}
                 />
                 <Route
-                    path="/stories/tanimahossain_2"
+                    path="/stories/:id"
                     exact
                     element={<StoryDetails />}
+                />
+                <Route
+                    path="/users/:id"
+                    exact
+                    element={<ProfilePage />}
+                />
+                <Route
+                    path="/auth"
+                    exact
+                    element={<SignUpLogIn />}
                 />
                 <Route path="*" element={<HomePage />} />
             </Routes>

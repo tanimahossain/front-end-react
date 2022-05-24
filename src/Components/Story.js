@@ -4,10 +4,11 @@ import Preview from './StoryListPreview.js';
 function Story(props) {
     return (
         <div className="wrap">
-            <div className="stories-container">
+            <div className="container">
                 <div className="story">
                     <Preview
                         storyTitle={props.story.storyTitle}
+                        storyId={props.story.storyId}
                         createdAt={props.story.createdAt}
                         updatedAt={props.story.updatedAt}
                     />

@@ -2,21 +2,22 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 function StoryTitle(props) {
+    const storyUrl = '/stories/' + props.story.storyId;
+    const userUrl = '/users/' + props.story.authorUsername;
+    console.log(storyUrl);
     return (
         <div className="storyTitle">
             <h3>
-                <Link
-                    to="stories/tanimahossain_2"
-                    className="noUnderLine"
-                >
+                <Link to={storyUrl} className="noUnderLine">
                     {props.story.storyTitle}
                 </Link>
             </h3>
-            <a href="#">
-                <span className="authorName">
-                    Author: {props.story.authorName}
+            <Link to={userUrl} className="noUnderLine">
+                <span className="authorName noUnderLine">
+                    Author Name:{' '}
+                    {props.story.authorUsername}
                 </span>
-            </a>
+            </Link>
         </div>
     );
 }

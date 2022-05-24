@@ -3,21 +3,25 @@ import React, { Component } from 'react';
 import '../App.css';
 import GetDate from '../utils/DateFormat';
 import StoryTitle from './StoryTitle.js';
-function PrintStory(props) {
+function PrintAStory(props) {
     return (
         <div className="wrap">
-            <div className="stories-container">
-                <div className="story">
+            <div className="container">
+                <div className="storyDetails">
                     <div className="story-info">
                         <StoryTitle story={props.story} />
-                        <GetDate
-                            date={props.story.createdAt}
-                        />
-                        <GetDate
-                            date={props.story.updatedAt}
-                        />
+                        <div className="storyDate-text">
+                            Created at: &emsp;&emsp;&ensp;
+                            <GetDate
+                                date={props.story.createdAt}
+                            />
+                            Last Updated at:{' '}
+                            <GetDate
+                                date={props.story.updatedAt}
+                            />
+                        </div>
                         <div className="storyBody">
-                            {props.story.openingLines}
+                            {props.story.storyDescription}
                         </div>
                     </div>
                 </div>
@@ -32,11 +36,14 @@ class FullStory extends Component {
         console.log(props);
         this.state = {
             ViewList: {},
+            storyId: props.storyId,
         };
     }
     componentDidMount() {
+        const baseUrl =
+            '/api/v1/stories/' + this.state.storyId;
         axios
-            .get('api/v1/stories/tanimahossain_2')
+            .get(baseUrl)
             .then((response) => {
                 //console.log(response);
                 this.setState({
@@ -50,7 +57,7 @@ class FullStory extends Component {
     render() {
         const { ViewList } = this.state;
         console.log(ViewList);
-        return <PrintStory story={ViewList} />;
+        return <PrintAStory story={ViewList} />;
     }
 }
 export default FullStory;

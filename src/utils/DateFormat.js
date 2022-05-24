@@ -5,11 +5,12 @@ function GetDate(props) {
         hour12: true,
     });
     return (
-        <div>
+        <>
             {date}
-            {props.newline && <br />}
+            {props.newline ? <br /> : ' '}
             {time}
-        </div>
+            <br />
+        </>
     );
 }
 

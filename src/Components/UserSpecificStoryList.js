@@ -11,11 +11,12 @@ function PrintStories(props) {
     return <div className="FlexStoryList">{ViewList}</div>;
 }
 
-class Stories extends Component {
+class UserSpecificStoryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             ViewList: [],
+            userName: props.userName,
         };
     }
     componentDidMount() {
@@ -33,7 +34,22 @@ class Stories extends Component {
     }
     render() {
         const { ViewList } = this.state;
-        return <PrintStories data={ViewList} />;
+        const arr = [];
+        for (let i = 0; i < ViewList.length; i++) {
+            if (
+                ViewList[i].authorUsername !=
+                this.state.userName
+            )
+                continue;
+            arr.push(ViewList[i]);
+        }
+        console.log('ksehfi', arr);
+        return (
+            <PrintStories
+                data={arr}
+                userName={this.state.userName}
+            />
+        );
     }
 }
-export default Stories;
+export default UserSpecificStoryList;

@@ -1,14 +1,10 @@
 import { FaArrowRight, FaRegUser } from 'react-icons/fa';
-import {
-    IoIosArrowDropdownCircle,
-    // eslint-disable-next-line prettier/prettier
-    IoIosArrowDropupCircle
-} from 'react-icons/io';
+import { Link } from 'react-router-dom';
 import '../App.css';
 import logo from '../appLogo.png';
 function SignUpLogIn() {
     return (
-        <a href="/homepage" className="navSignUpLogIn">
+        <Link to="/auth" className="navSignUpLogIn">
             <span className="icon">
                 <FaRegUser />
             </span>
@@ -17,23 +13,18 @@ function SignUpLogIn() {
                 <FaArrowRight />
             </span>
             LogIn
-        </a>
+        </Link>
     );
 }
 function User(props) {
-    const menu = props.dropdown ? (
-        <IoIosArrowDropdownCircle />
-    ) : (
-        <IoIosArrowDropupCircle />
-    );
+    const url = '/' + props.userName;
     return (
-        <a href="/homepage" className="navSignUpLogIn">
+        <Link to={url} className="navSignUpLogIn">
             <span className="icon">
                 <FaRegUser />
             </span>
-            {props.userName}{' '}
-            <span className="icon">{menu}</span>
-        </a>
+            {props.userName}
+        </Link>
     );
 }
 
@@ -49,7 +40,9 @@ function Navbar(props) {
     return (
         <div>
             <nav>
-                <img src={logo}></img>
+                <Link to="/" className="noUnderLine">
+                    <img src={logo}></img>
+                </Link>
                 {auth}
             </nav>
         </div>

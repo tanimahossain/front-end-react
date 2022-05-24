@@ -28,7 +28,7 @@ body {
   margin: 0;
 }
 
-.stories-container {
+.container {
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -50,6 +50,22 @@ body {
   width: 90%;
   height: 100%;
   align-self: center;
+}
+.storyDetails {
+  background-color: #fff;
+  border: var(--navBarColor);
+  border-width: 0px;
+  border-style: solid inset;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px var(--cardShadowColor);
+  display: grid;
+  margin: auto auto auto auto;
+  align-content: center;
+  overflow: hidden;
+  width: 90%;
+  height: 100%;
+  align-self: center;
+  padding: 20px;
 }
 .story:hover {
   box-shadow: 5px 5px 10px 5px #83acb3;
