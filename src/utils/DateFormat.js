@@ -1,15 +1,14 @@
 function GetDate(props) {
     const myDate = new Date(props.date);
-    const a = myDate.toLocaleDateString();
-    const b = myDate.toLocaleTimeString('en', {
+    const date = myDate.toLocaleDateString();
+    const time = myDate.toLocaleTimeString('en', {
         hour12: true,
-        timeZone: 'GMT',
     });
     return (
         <div>
-            {a}
-            <br />
-            {b}
+            {date}
+            {props.newline && <br />}
+            {time}
         </div>
     );
 }

@@ -1,12 +1,29 @@
+import {
+    BrowserRouter,
+    Route,
+    // eslint-disable-next-line prettier/prettier
+    Routes
+} from 'react-router-dom';
 import './App.css';
-import Navbar from './Navbar.js';
-import Stories from './StoryList.js';
+import HomePage from './Pages/HomePage.js';
+import StoryDetails from './Pages/StoryDetails.js';
 function App() {
     return (
-        <div>
-            <Navbar />
-            <Stories />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/homepage"
+                    exact
+                    element={<HomePage />}
+                />
+                <Route
+                    path="/stories/tanimahossain_2"
+                    exact
+                    element={<StoryDetails />}
+                />
+                <Route path="*" element={<HomePage />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
