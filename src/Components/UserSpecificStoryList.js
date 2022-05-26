@@ -29,7 +29,7 @@ class UserSpecificStoryList extends Component {
                 });
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
     }
     render() {
@@ -43,7 +43,7 @@ class UserSpecificStoryList extends Component {
                 continue;
             arr.push(ViewList[i]);
         }
-        console.log('ksehfi', arr);
+        //console.log('ksehfi', arr);
         return (
             <PrintStories
                 data={arr}

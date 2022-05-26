@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import {
     BrowserRouter,
     Route,
@@ -11,31 +12,38 @@ import SignUpLogIn from './Pages/SignUpLogIn';
 import StoryDetails from './Pages/StoryDetails.js';
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route
-                    path="/homepage"
-                    exact
-                    element={<HomePage />}
-                />
-                <Route
-                    path="/stories/:id"
-                    exact
-                    element={<StoryDetails />}
-                />
-                <Route
-                    path="/users/:id"
-                    exact
-                    element={<ProfilePage />}
-                />
-                <Route
-                    path="/auth"
-                    exact
-                    element={<SignUpLogIn />}
-                />
-                <Route path="*" element={<HomePage />} />
-            </Routes>
-        </BrowserRouter>
+        <>
+            <StrictMode>
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            path="/homepage"
+                            exact
+                            element={<HomePage />}
+                        />
+                        <Route
+                            path="/stories/:id"
+                            exact
+                            element={<StoryDetails />}
+                        />
+                        <Route
+                            path="/users/:id"
+                            exact
+                            element={<ProfilePage />}
+                        />
+                        <Route
+                            path="/auth"
+                            exact
+                            element={<SignUpLogIn />}
+                        />
+                        <Route
+                            path="*"
+                            element={<HomePage />}
+                        />
+                    </Routes>
+                </BrowserRouter>
+            </StrictMode>
+        </>
     );
 }
 

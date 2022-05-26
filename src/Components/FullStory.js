@@ -33,12 +33,13 @@ function PrintAStory(props) {
 class FullStory extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props);
         this.state = {
             ViewList: {},
             storyId: props.storyId,
         };
     }
+    //shouldComponentUpdate = () => false;
     componentDidMount() {
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
@@ -51,12 +52,12 @@ class FullStory extends Component {
                 });
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
     }
     render() {
         const { ViewList } = this.state;
-        console.log(ViewList);
+        //console.log(ViewList);
         return <PrintAStory story={ViewList} />;
     }
 }

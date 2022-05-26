@@ -4,7 +4,25 @@ import '../App.css';
 import UserButtons from '../Components/UserButtons.js';
 import UserFullName from '../Components/UserFullName.js';
 import '../styles/Profile.css';
+function getButtons(props) {
+    const loggedIn = localStorage.getItem('loggedIn');
+    if (
+        loggedIn &&
+        localStorage.getItem('userName') ==
+            props.user.userName
+    ) {
+        return <UserButtons />;
+    }
+    return;
+}
 function PrintAUser(props) {
+    //const loggedIn = localStorage.getItem('loggedIn');
+    //console.log(loggedIn);
+    // console.log(
+    //     'username: ',
+    //     localStorage.getItem('userName'),
+    //     props.user.userName
+    // );
     return (
         <div className="wrap">
             <div className="container bottonBorder">
@@ -17,7 +35,7 @@ function PrintAUser(props) {
                                 />
                             </div>
                         </div>
-                        <UserButtons />
+                        {getButtons(props)}
                     </div>
                 </div>
             </div>
@@ -28,7 +46,7 @@ function PrintAUser(props) {
 class Profile extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props);
         this.state = {
             ViewList: {},
             userId: props.userId,
@@ -46,12 +64,12 @@ class Profile extends Component {
                 });
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
     }
     render() {
         const { ViewList } = this.state;
-        console.log(ViewList);
+        //console.log(ViewList);
         return <PrintAUser user={ViewList} />;
     }
 }

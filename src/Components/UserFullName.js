@@ -3,7 +3,7 @@ import '../App.css';
 
 function UserFullName(props) {
     const userUrl = '/users/' + props.user.userName;
-    console.log(userUrl);
+    //console.log(userUrl);
     return (
         <div className="storyTitle">
             <h3>

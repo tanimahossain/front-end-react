@@ -4,7 +4,7 @@ import '../App.css';
 import GetDate from '../utils/DateFormat.js';
 function Preview(props) {
     const storyUrl = 'stories/' + props.storyId;
-    console.log(storyUrl);
+    //console.log(storyUrl);
     return (
         <div className="story-preview">
             <div className="storyDate-container">

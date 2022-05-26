@@ -28,7 +28,7 @@ class Stories extends Component {
                 });
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
     }
     render() {
