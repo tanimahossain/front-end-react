@@ -1,15 +1,20 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
-import '../styles/Profile.css';
-export default class UserButtons extends Component {
+import '../styles/Story.css';
+export default class StoryButtons extends Component {
     constructor(props) {
         super(props);
         //console.log(props);
+        this.state = {
+            ViewList: {},
+            storyId: props.story.storyId,
+        };
     }
     handleDeleteChange = async () => {
         console.log(localStorage.getItem('token'));
-        const user = {};
+        const story = {};
         const config = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem(
@@ -18,34 +23,33 @@ export default class UserButtons extends Component {
                 )}`,
             },
         };
-        const baseUrl = '/api/v1/users/';
-        //const navigate = useNavigate();
+        const baseUrl =
+            '/api/v1/stories/' + this.state.storyId;
         try {
-            await axios.delete(baseUrl, config, user);
-            alert('User deleted!');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('token');
-            localStorage.removeItem('loggedIn');
+            await axios.delete(baseUrl, config, story);
+            alert('story deleted!');
             window.open('/');
         } catch {
             //console.log(err);
         }
     };
     render() {
+        const baseUrl =
+            '/stories/' + this.state.storyId + '/edit';
+        console.log(baseUrl);
         return (
             <div>
-                <button className="CreateStorybtn">
-                    Create Story
-                </button>
-                <button className="UpdateUserbtn">
-                    Update User
-                </button>
                 <button
-                    className="DeleteUserbtn"
+                    className="DeleteStorybtn"
                     onClick={this.handleDeleteChange}
                 >
-                    Delete User
+                    Delete Story
                 </button>
+                <Link to={baseUrl}>
+                    <button className="UpdateStorybtn">
+                        Update Story
+                    </button>
+                </Link>
             </div>
         );
     }

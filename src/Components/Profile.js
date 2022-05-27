@@ -1,28 +1,28 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+//import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import UserButtons from '../Components/UserButtons.js';
 import UserFullName from '../Components/UserFullName.js';
 import '../styles/Profile.css';
 function getButtons(props) {
+    const navigate = useNavigate();
     const loggedIn = localStorage.getItem('loggedIn');
     if (
         loggedIn &&
         localStorage.getItem('userName') ==
             props.user.userName
     ) {
-        return <UserButtons />;
+        return <UserButtons navigate={navigate} />;
     }
     return;
 }
 function PrintAUser(props) {
-    //const loggedIn = localStorage.getItem('loggedIn');
-    //console.log(loggedIn);
-    // console.log(
-    //     'username: ',
-    //     localStorage.getItem('userName'),
-    //     props.user.userName
-    // );
+    console.log(props.user.userName, !props.user.userName);
+    if (!props.user.userName) {
+        //return <Navigate to="/" />;
+    }
     return (
         <div className="wrap">
             <div className="container bottonBorder">
@@ -52,10 +52,10 @@ class Profile extends Component {
             userId: props.userId,
         };
     }
-    componentDidMount() {
+    componentDidMount = async () => {
         const baseUrl =
             '/api/v1/users/' + this.state.userId;
-        axios
+        await axios
             .get(baseUrl)
             .then((response) => {
                 //console.log(response);
@@ -64,12 +64,11 @@ class Profile extends Component {
                 });
             })
             .catch((err) => {
-                //console.log(err);
+                //window.location.reload();
             });
-    }
+    };
     render() {
         const { ViewList } = this.state;
-        //console.log(ViewList);
         return <PrintAUser user={ViewList} />;
     }
 }

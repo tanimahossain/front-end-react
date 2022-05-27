@@ -4,6 +4,7 @@
   --cardShadowColor: #83acb3;
   --navBarColor: #14365d;
   --storyTitleColor: #75a4ac;
+  --cancelBtnColor: #8a8a8a;
 }
 
 @import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
@@ -189,4 +190,25 @@ nav {
 }
 .noUnderLine {
   text-decoration: none;
+}
+
+.Cancelbtn {
+  width: 15%;
+  height: wrap;
+  background-color: white;
+  color: var(--cancelBtnColor);
+  padding: 10px;
+  margin: 4px;
+  border: var(--cancelBtnColor);
+  border-width: 1px;
+  border-style: solid inset;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  align-content: center;
+  float: right;
+}
+.Cancelbtn:hover {
+  background-color: var(--cancelBtnColor);
+  color: white;
 }

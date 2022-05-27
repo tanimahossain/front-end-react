@@ -1,19 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import '../App.css';
-import StoryButtons from '../Components/StoryButtons.js';
+import StoryUpdateButtons from '../Components/StoryUpdateButtons.js';
+import '../styles/Story.css';
 import GetDate from '../utils/DateFormat';
 import StoryTitle from './StoryTitle.js';
 function getButtons(props) {
-    const loggedIn = localStorage.getItem('loggedIn');
-    if (
-        loggedIn &&
-        localStorage.getItem('userName') ==
-            props.story.authorUsername
-    ) {
-        return <StoryButtons story={props.story} />;
-    }
-    return;
+    return <StoryUpdateButtons story={props.story} />;
 }
 function PrintAStory(props) {
     return (
@@ -32,9 +25,6 @@ function PrintAStory(props) {
                                 date={props.story.updatedAt}
                             />
                         </div>
-                        <div className="storyBody">
-                            {props.story.storyDescription}
-                        </div>
                         {getButtons(props)}
                     </div>
                 </div>
@@ -43,7 +33,7 @@ function PrintAStory(props) {
     );
 }
 
-class FullStory extends Component {
+class UpdateFullStory extends Component {
     constructor(props) {
         super(props);
         //console.log(props);
@@ -74,4 +64,4 @@ class FullStory extends Component {
         return <PrintAStory story={ViewList} />;
     }
 }
-export default FullStory;
+export default UpdateFullStory;
