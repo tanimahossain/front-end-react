@@ -36,6 +36,11 @@ export default class StoryUpdateButtons extends Component {
             '/api/v1/stories/' + this.props.story.storyId;
         console.log('caseUrl: ', baseUrl);
         //const navigate = useNavigate();
+        axios.defaults.headers = {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
         try {
             // await axios.put({
             //     url: baseUrl,
@@ -61,6 +66,18 @@ export default class StoryUpdateButtons extends Component {
         console.log('baseUrl: ', baseUrl);
         return (
             <div>
+                Story Title
+                <textarea
+                    type="text"
+                    defaultValue={
+                        this.props.story.storyTitle
+                    }
+                    name="storyTitle"
+                    className="editStoryTitle"
+                    onChange={this.handleFieldChange}
+                    wrap="hard"
+                />
+                Story
                 <textarea
                     type="text"
                     defaultValue={

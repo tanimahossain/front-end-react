@@ -20,7 +20,7 @@ export default class SignUp extends Component {
             [event.target.name]: event.target.value,
         });
     };
-    handleSubmitChange = (event) => {
+    handleSubmitChange = async (event) => {
         event.preventDefault();
         if (
             this.state.password !==
@@ -37,7 +37,12 @@ export default class SignUp extends Component {
         };
         //console.log(this.state);
         const baseUrl = '/api/v1/users/';
-        axios
+        axios.defaults.headers = {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
+        await axios
             .post(baseUrl, user)
             .then((response) => {
                 //console.log(response);

@@ -1,6 +1,6 @@
 :root {
-  --bodyBackgroundColor: #b9dce2;
-  --bodyBackgroundColor1: #9ee1ec;
+  --bodyBackgroundColor: #d2ebf0;
+  --bodyBackgroundColor1: #b9e7ee;
   --cardShadowColor: #83acb3;
   --navBarColor: #14365d;
   --storyTitleColor: #75a4ac;
@@ -151,6 +151,7 @@ nav {
   height: 48px;
   background-color: var(--navBarColor);
   margin: 0px;
+  box-shadow: 0px 0px 5px 5px var(--cardShadowColor);
 }
 
 .navSignUpLogIn {
@@ -207,8 +208,14 @@ nav {
   font-size: 16px;
   align-content: center;
   float: right;
+  box-shadow: 3px 3px 10px var(--cardShadowColor);
 }
 .Cancelbtn:hover {
   background-color: var(--cancelBtnColor);
   color: white;
+}
+.shadow:hover {
+  text-shadow: 3px 3px 10px var(--cardShadowColor);
+}
+@media all and (max-width: 500px) {
 }

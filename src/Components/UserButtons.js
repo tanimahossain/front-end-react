@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
 import '../styles/Profile.css';
 export default class UserButtons extends Component {
@@ -18,6 +19,11 @@ export default class UserButtons extends Component {
                 )}`,
             },
         };
+        axios.defaults.headers = {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
         const baseUrl = '/api/v1/users/';
         //const navigate = useNavigate();
         try {
@@ -34,12 +40,16 @@ export default class UserButtons extends Component {
     render() {
         return (
             <div>
-                <button className="CreateStorybtn">
-                    Create Story
-                </button>
-                <button className="UpdateUserbtn">
-                    Update User
-                </button>
+                <Link to="/stories/">
+                    <button className="CreateStorybtn">
+                        Create Story
+                    </button>
+                </Link>
+                <Link to="/users/">
+                    <button className="UpdateUserbtn">
+                        Update User
+                    </button>
+                </Link>
                 <button
                     className="DeleteUserbtn"
                     onClick={this.handleDeleteChange}

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import '../App.css';
 import StoryButtons from '../Components/StoryButtons.js';
 import GetDate from '../utils/DateFormat';
@@ -49,28 +50,36 @@ class FullStory extends Component {
         //console.log(props);
         this.state = {
             ViewList: {},
+            doRedirect: false,
             storyId: props.storyId,
         };
     }
     //shouldComponentUpdate = () => false;
-    componentDidMount() {
+    async componentDidMount() {
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
-        axios
-            .get(baseUrl)
-            .then((response) => {
-                //console.log(response);
-                this.setState({
-                    ViewList: response.data.storyData,
-                });
-            })
-            .catch((err) => {
-                //console.log(err);
+
+        try {
+            const response = await axios.get(baseUrl);
+            this.setState({
+                ViewList: response.data.storyData,
             });
+        } catch (err) {
+            window.open('/', '_self');
+            this.setState({
+                doRedirect: true,
+            });
+        }
+    }
+    static getDerivedStateFromError(error) {
+        return { doRedirect: true };
     }
     render() {
         const { ViewList } = this.state;
         //console.log(ViewList);
+        if (this.state.doRedirect) {
+            return <Navigate to="/" />;
+        }
         return <PrintAStory story={ViewList} />;
     }
 }

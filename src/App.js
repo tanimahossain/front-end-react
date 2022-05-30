@@ -6,10 +6,12 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import HomePage from './Pages/HomePage.js';
+import PostStoryPage from './Pages/PostStoryPage.js';
 import ProfilePage from './Pages/ProfilePage.js';
 import SignUpLogIn from './Pages/SignUpLogIn.js';
 import StoryDetails from './Pages/StoryDetails.js';
 import UpdateStory from './Pages/UpdateStory.js';
+import UserUpdatePage from './Pages/UserUpdatePage.js';
 function App() {
     return (
         <>
@@ -21,6 +23,11 @@ function App() {
                         element={<HomePage />}
                     />
                     <Route
+                        path="/stories/"
+                        exact
+                        element={<PostStoryPage />}
+                    />
+                    <Route
                         path="/stories/:id"
                         exact
                         element={<StoryDetails />}
@@ -29,6 +36,11 @@ function App() {
                         path="/stories/:id/edit"
                         exact
                         element={<UpdateStory />}
+                    />
+                    <Route
+                        path="/users/"
+                        exact
+                        element={<UserUpdatePage />}
                     />
                     <Route
                         path="/users/:id"

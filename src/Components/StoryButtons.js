@@ -25,6 +25,11 @@ export default class StoryButtons extends Component {
         };
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
+        axios.defaults.headers = {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
         try {
             await axios.delete(baseUrl, config, story);
             alert('story deleted!');

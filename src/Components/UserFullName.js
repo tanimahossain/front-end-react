@@ -8,13 +8,19 @@ function UserFullName(props) {
         <div className="storyTitle">
             <h3>
                 Full Name:{' '}
-                <Link to={userUrl} className="noUnderLine">
+                <Link
+                    to={userUrl}
+                    className="noUnderLine shadow"
+                >
                     {props.user.fullName}
                 </Link>
             </h3>
             <h3>
                 Username:{' '}
-                <Link to={userUrl} className="noUnderLine">
+                <Link
+                    to={userUrl}
+                    className="noUnderLine shadow"
+                >
                     {props.user.userName}
                 </Link>
             </h3>

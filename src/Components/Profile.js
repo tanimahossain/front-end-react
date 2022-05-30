@@ -55,6 +55,11 @@ class Profile extends Component {
     componentDidMount = async () => {
         const baseUrl =
             '/api/v1/users/' + this.state.userId;
+        axios.defaults.headers = {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
         await axios
             .get(baseUrl)
             .then((response) => {

@@ -24,6 +24,7 @@ export default class LogIn extends Component {
         const user = {
             userName: this.state.userName,
             password: this.state.password,
+            doRedirect: false,
         };
         const baseUrl = '/api/v1/users/logIn';
         await axios
@@ -48,7 +49,7 @@ export default class LogIn extends Component {
             });
     };
     render() {
-        if (localStorage.getItem('loggedIn')) {
+        if (this.state.doRedirect) {
             return <Navigate to="/" />;
         }
         return (

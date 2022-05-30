@@ -8,6 +8,7 @@ select {
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
+  box-shadow: 2px 2px 8px var(--cardShadowColor) inset;
 }
 input[type="email"],
 select {
@@ -19,6 +20,7 @@ select {
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
+  box-shadow: 2px 2px 8px var(--cardShadowColor) inset;
 }
 input[type="password"],
 select {
@@ -30,6 +32,7 @@ select {
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
+  box-shadow: 2px 2px 8px var(--cardShadowColor) inset;
 }
 
 button[type="submit"] {
@@ -42,6 +45,7 @@ button[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  box-shadow: 3px 3px 10px var(--cardShadowColor);
 }
 
 button[type="submit"]:hover {

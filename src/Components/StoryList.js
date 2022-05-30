@@ -19,6 +19,11 @@ class Stories extends Component {
         };
     }
     componentDidMount() {
+        axios.defaults.headers = {
+            'Cache-Control': 'no-cache',
+            Pragma: 'no-cache',
+            Expires: '0',
+        };
         axios
             .get('/api/v1/stories/')
             .then((response) => {

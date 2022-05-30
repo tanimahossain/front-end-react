@@ -8,12 +8,15 @@ function StoryTitle(props) {
     return (
         <div className="storyTitle">
             <h3>
-                <Link to={storyUrl} className="noUnderLine">
+                <Link
+                    to={storyUrl}
+                    className="noUnderLine shadow"
+                >
                     {props.story.storyTitle}
                 </Link>
             </h3>
             <Link to={userUrl} className="noUnderLine">
-                <span className="authorName noUnderLine">
+                <span className="authorName noUnderLine shadow">
                     Author Name:{' '}
                     {props.story.authorUsername}
                 </span>

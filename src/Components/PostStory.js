@@ -1,16 +1,15 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import '../App.css';
-import StoryUpdateButtons from '../Components/StoryUpdateButtons.js';
 import '../styles/Story.css';
-
-function PrintAStory(props) {
+import StoryPostButtons from './PostStoryButtons.js';
+function MakeAStory(props) {
     return (
         <div className="wrap">
             <div className="container">
                 <div className="storyDetails">
                     <div className="story-info">
-                        <StoryUpdateButtons
+                        <StoryPostButtons
                             story={props.story}
                         />
                     </div>
@@ -20,7 +19,7 @@ function PrintAStory(props) {
     );
 }
 
-class UpdateFullStory extends Component {
+class PostAStory extends Component {
     constructor(props) {
         super(props);
         //console.log(props);
@@ -30,7 +29,7 @@ class UpdateFullStory extends Component {
         };
     }
     //shouldComponentUpdate = () => false;
-    componentDidMount() {
+    async componentDidMount() {
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
         axios.defaults.headers = {
@@ -38,7 +37,7 @@ class UpdateFullStory extends Component {
             Pragma: 'no-cache',
             Expires: '0',
         };
-        axios
+        await axios
             .get(baseUrl)
             .then((response) => {
                 //console.log(response);
@@ -53,7 +52,7 @@ class UpdateFullStory extends Component {
     render() {
         const { ViewList } = this.state;
         //console.log(ViewList);
-        return <PrintAStory story={ViewList} />;
+        return <MakeAStory story={ViewList} />;
     }
 }
-export default UpdateFullStory;
+export default PostAStory;
