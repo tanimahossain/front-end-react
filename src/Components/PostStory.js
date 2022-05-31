@@ -26,6 +26,7 @@ class PostAStory extends Component {
         this.state = {
             ViewList: {},
             storyId: props.storyId,
+            doRedirect: false,
         };
     }
     //shouldComponentUpdate = () => false;
@@ -46,12 +47,18 @@ class PostAStory extends Component {
                 });
             })
             .catch((err) => {
+                this.setState({
+                    doRedirect: true,
+                });
                 //console.log(err);
             });
     }
     render() {
         const { ViewList } = this.state;
         //console.log(ViewList);
+        if (this.state.doRedirect) {
+            return <Navigate to="/stories/" />;
+        }
         return <MakeAStory story={ViewList} />;
     }
 }

@@ -33,7 +33,7 @@ export default class StoryButtons extends Component {
         try {
             await axios.delete(baseUrl, config, story);
             alert('story deleted!');
-            window.open('/');
+            window.open('/', '_self');
         } catch {
             //console.log(err);
         }

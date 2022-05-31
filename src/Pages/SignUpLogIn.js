@@ -1,13 +1,23 @@
 //import SignUpForm from '../Components/SignUpForm.js';
 import React, { Component } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import LogInForm from '../Components/LogInForm.js';
 import Navbar from '../Components/Navbar.js';
 import SignUpForm from '../Components/SignUpForm.js';
 import '../styles/SignUp.css';
+
 export default class SignUp extends Component {
     render() {
+        if (localStorage.getItem('errorAlert')) {
+            toast.error(localStorage.getItem('errorAlert'));
+            localStorage.removeItem('errorAlert');
+        }
         return (
             <>
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={2000}
+                />
                 <Navbar />
                 <div className="SignUpLogInBox">
                     <div className="sideBorder">

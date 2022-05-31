@@ -65,7 +65,7 @@ export default class StoryUpdateButtons extends Component {
             '/stories/' + this.props.story.storyId;
         console.log('baseUrl: ', baseUrl);
         return (
-            <div>
+            <form onSubmit={this.handleUpdateChange}>
                 Story Title
                 <textarea
                     type="text"
@@ -76,6 +76,7 @@ export default class StoryUpdateButtons extends Component {
                     className="editStoryTitle"
                     onChange={this.handleFieldChange}
                     wrap="hard"
+                    required
                 />
                 Story
                 <textarea
@@ -87,19 +88,17 @@ export default class StoryUpdateButtons extends Component {
                     className="editStoryBody"
                     onChange={this.handleFieldChange}
                     wrap="hard"
+                    required
                 />
                 <Link to={baseUrl}>
                     <button className="Cancelbtn">
                         Cancel
                     </button>
                 </Link>
-                <button
-                    className="UpdateStorybtn"
-                    onClick={this.handleUpdateChange}
-                >
+                <button className="UpdateStorybtn">
                     Update
                 </button>
-            </div>
+            </form>
         );
     }
 }

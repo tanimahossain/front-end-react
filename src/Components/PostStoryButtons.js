@@ -67,41 +67,45 @@ export default class PostStoryButtons extends Component {
                 <div className="container">
                     <div className="storyDetails">
                         <div className="story-info">
-                            Story Title
-                            <textarea
-                                type="text"
-                                placeholder="Story Title..."
-                                name="storyTitle"
-                                className="editStoryTitle"
-                                onChange={
-                                    this.handleFieldChange
-                                }
-                                wrap="hard"
-                            />
-                            Story
-                            <textarea
-                                type="text"
-                                placeholder="Story Description...."
-                                name="storyDescription"
-                                className="editStoryBody"
-                                onChange={
-                                    this.handleFieldChange
-                                }
-                                wrap="hard"
-                            />
-                            <Link to={baseUrl}>
-                                <button className="Cancelbtn">
-                                    Cancel
-                                </button>
-                            </Link>
-                            <button
-                                className="UpdateStorybtn"
-                                onClick={
+                            <form
+                                onSubmit={
                                     this.handleUpdateChange
                                 }
                             >
-                                Post Story
-                            </button>
+                                Story Title
+                                <textarea
+                                    placeholder="Story Title..."
+                                    name="storyTitle"
+                                    className="editStoryTitle"
+                                    onChange={
+                                        this
+                                            .handleFieldChange
+                                    }
+                                    wrap="hard"
+                                    required
+                                />
+                                Story
+                                <textarea
+                                    type="text"
+                                    placeholder="Story Description...."
+                                    name="storyDescription"
+                                    className="editStoryBody"
+                                    onChange={
+                                        this
+                                            .handleFieldChange
+                                    }
+                                    wrap="hard"
+                                    required
+                                />
+                                <Link to={baseUrl}>
+                                    <button className="Cancelbtn">
+                                        Cancel
+                                    </button>
+                                </Link>
+                                <button className="UpdateStorybtn">
+                                    Post Story
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

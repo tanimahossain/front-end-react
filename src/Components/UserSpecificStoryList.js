@@ -5,6 +5,11 @@ import Story from './Story';
 
 function PrintStories(props) {
     const List = props.data;
+    List.sort(function (a, b) {
+        return (
+            new Date(b.createdAt) - new Date(a.createdAt)
+        );
+    });
     const ViewList = List.map((eStory) => (
         <Story key={eStory.storyId} story={eStory} />
     ));

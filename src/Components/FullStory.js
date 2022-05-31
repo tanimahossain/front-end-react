@@ -65,7 +65,6 @@ class FullStory extends Component {
                 ViewList: response.data.storyData,
             });
         } catch (err) {
-            window.open('/', '_self');
             this.setState({
                 doRedirect: true,
             });

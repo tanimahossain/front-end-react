@@ -12,6 +12,7 @@ export default class LogIn extends Component {
         this.state = {
             userName: '',
             password: '',
+            doRedirect: false,
         };
     }
     handleFieldChange = (event) => {
@@ -24,7 +25,6 @@ export default class LogIn extends Component {
         const user = {
             userName: this.state.userName,
             password: this.state.password,
-            doRedirect: false,
         };
         const baseUrl = '/api/v1/users/logIn';
         await axios
@@ -41,53 +41,42 @@ export default class LogIn extends Component {
                     response.data.token
                 );
                 localStorage.setItem('loggedIn', true);
+                this.setState({
+                    doRedirect: true,
+                });
                 //alert('user loggedIn successfully');
-                window.location.reload();
+                //window.location.reload();
             })
             .catch((err) => {
-                //console.log(err);
+                console.log(err);
             });
     };
     render() {
-        if (this.state.doRedirect) {
+        if (
+            this.state.doRedirect ||
+            localStorage.getItem('loggedIn')
+        ) {
             return <Navigate to="/" />;
         }
         return (
-            <form>
-                <div>
-                    <label className="labelColor">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Username"
-                        value={this.state.userName}
-                        name="userName"
-                        onChange={this.handleFieldChange}
-                    />
-                </div>
-                <div>
-                    <label className="labelColor">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Enter password"
-                        value={this.state.password}
-                        name="password"
-                        onChange={this.handleFieldChange}
-                    />
-                </div>
-                <div>
-                    <button
-                        type="submit"
-                        onClick={this.handleSubmitChange}
-                    >
-                        Log In
-                    </button>
-                </div>
+            <form onSubmit={this.handleSubmitChange}>
+                <input
+                    required
+                    type="text"
+                    placeholder="Username"
+                    name="userName"
+                    onChange={this.handleFieldChange}
+                />
+
+                <input
+                    required
+                    type="password"
+                    placeholder="Enter password"
+                    value={this.state.password}
+                    name="password"
+                    onChange={this.handleFieldChange}
+                />
+                <button type="submit">Log In</button>
             </form>
         );
     }

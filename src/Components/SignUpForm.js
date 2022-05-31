@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import '../styles/InputText.css';
 export default class SignUp extends Component {
@@ -13,6 +15,7 @@ export default class SignUp extends Component {
             eMail: '',
             password: '',
             confirmPassword: '',
+            doRedirect: false,
         };
     }
     handleFieldChange = (event) => {
@@ -42,38 +45,53 @@ export default class SignUp extends Component {
             Pragma: 'no-cache',
             Expires: '0',
         };
-        await axios
-            .post(baseUrl, user)
-            .then((response) => {
-                //console.log(response);
-                //console.log(response);
-                localStorage.setItem(
-                    'userName',
-                    response.data.userName
-                );
-                localStorage.setItem(
-                    'token',
-                    response.data.token
-                );
-                localStorage.setItem('loggedIn', true);
-                alert('user created successfully');
-                window.location.reload();
-            })
-            .catch((err) => {
-                //console.log(err);
+        try {
+            const response = await axios.post(
+                baseUrl,
+                user
+            );
+            localStorage.setItem(
+                'userName',
+                response.data.userName
+            );
+            localStorage.setItem(
+                'token',
+                response.data.token
+            );
+            localStorage.setItem('loggedIn', true);
+            this.setState({
+                doRedirect: true,
             });
+            toast.success(
+                localStorage.getItem('successAlert')
+            );
+        } catch (err) {
+            console.log(err);
+        }
     };
     render() {
-        if (localStorage.getItem('loggedIn')) {
+        if (
+            this.state.doRedirect ||
+            localStorage.getItem('loggedIn')
+        ) {
+            // localStorage.setItem(
+            //     'successAlert',
+            //     'User Created successfully'
+            // );
+            // toast.success(
+            //     localStorage.getItem('successAlert')
+            // );
             return <Navigate to="/" />;
         }
         return (
-            <form>
-                <div>
-                    <label className="labelColor">
-                        Username
-                    </label>
+            <>
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={2000}
+                />
+                <form onSubmit={this.handleSubmitChange}>
                     <input
+                        required
                         type="text"
                         className="form-control"
                         placeholder="Username"
@@ -81,11 +99,6 @@ export default class SignUp extends Component {
                         name="userName"
                         onChange={this.handleFieldChange}
                     />
-                </div>
-                <div>
-                    <label className="labelColor">
-                        Full Name
-                    </label>
                     <input
                         type="text"
                         className="form-control"
@@ -94,11 +107,6 @@ export default class SignUp extends Component {
                         name="fullName"
                         onChange={this.handleFieldChange}
                     />
-                </div>
-                <div>
-                    <label className="labelColor">
-                        Email address
-                    </label>
                     <input
                         type="email"
                         className="form-control"
@@ -107,11 +115,6 @@ export default class SignUp extends Component {
                         name="eMail"
                         onChange={this.handleFieldChange}
                     />
-                </div>
-                <div>
-                    <label className="labelColor">
-                        Password
-                    </label>
                     <input
                         type="password"
                         className="form-control"
@@ -120,29 +123,17 @@ export default class SignUp extends Component {
                         name="password"
                         onChange={this.handleFieldChange}
                     />
-                </div>
-                <div>
-                    <label className="labelColor">
-                        Confirm Password
-                    </label>
                     <input
                         type="password"
                         className="form-control"
-                        placeholder="Enter password"
+                        placeholder="Confirm password"
                         value={this.state.confirmPassword}
                         name="confirmPassword"
                         onChange={this.handleFieldChange}
                     />
-                </div>
-                <div>
-                    <button
-                        type="submit"
-                        onClick={this.handleSubmitChange}
-                    >
-                        Sign Up
-                    </button>
-                </div>
-            </form>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </>
         );
     }
 }

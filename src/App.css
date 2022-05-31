@@ -179,7 +179,7 @@ nav {
 .FlexStoryList {
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
+  padding-top: 20px;
 }
 .seeFullStory {
   font-size: 12px;
@@ -216,6 +216,34 @@ nav {
 }
 .shadow:hover {
   text-shadow: 3px 3px 10px var(--cardShadowColor);
+}
+.errorAlert {
+  opacity: 1;
+  border: red;
+  color: rgb(236, 187, 187);
+  background-color: rgba(0, 0, 0, 0.479);
+  border-width: 2px;
+  border-style: solid inset;
+  border-radius: 5px;
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  align-content: center;
+  align-items: center;
+}
+.successAlert {
+  opacity: 1;
+  border: rgb(0, 231, 0);
+  color: rgb(85, 226, 85);
+  background-color: rgba(0, 0, 0, 0.479);
+  border-width: 3px;
+  border-style: solid inset;
+  border-radius: 5px;
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+  align-content: center;
+  align-items: center;
 }
 @media all and (max-width: 500px) {
 }

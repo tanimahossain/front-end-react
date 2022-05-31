@@ -32,7 +32,7 @@ export default class UserButtons extends Component {
             localStorage.removeItem('userName');
             localStorage.removeItem('token');
             localStorage.removeItem('loggedIn');
-            window.open('/');
+            window.open('/', '_self');
         } catch {
             //console.log(err);
         }

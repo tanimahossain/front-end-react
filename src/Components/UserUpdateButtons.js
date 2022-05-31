@@ -67,6 +67,12 @@ export default class PostStoryButtons extends Component {
             //localStorage.setItem('loggedIn', false);
             //navigate('/');
             console.log(response);
+            if (response.data.token) {
+                localStorage.setItem(
+                    'token',
+                    response.data.token
+                );
+            }
             window.open(
                 '/users/' +
                     localStorage.getItem('userName'),
