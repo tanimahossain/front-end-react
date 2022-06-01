@@ -1,20 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import '../App.css';
-import Story from './Story';
-
-function PrintStories(props) {
-    const List = props.data;
-    List.sort(function (a, b) {
-        return (
-            new Date(b.createdAt) - new Date(a.createdAt)
-        );
-    });
-    const ViewList = List.map((eStory) => (
-        <Story key={eStory.storyId} story={eStory} />
-    ));
-    return <div className="FlexStoryList">{ViewList}</div>;
-}
+import PrintStories from './PrintStories.js';
 
 class UserSpecificStoryList extends Component {
     constructor(props) {
@@ -22,6 +9,9 @@ class UserSpecificStoryList extends Component {
         this.state = {
             ViewList: [],
             userName: props.userName,
+            loading: false,
+            currentPage: 1,
+            storiesPerPage: 5,
         };
     }
     componentDidMount() {
@@ -42,22 +32,40 @@ class UserSpecificStoryList extends Component {
                 //console.log(err);
             });
     }
+    Paginate = (page) => {
+        this.setState({
+            currentPage: page,
+        });
+    };
     render() {
         const { ViewList } = this.state;
-        const arr = [];
+        const stories = [];
         for (let i = 0; i < ViewList.length; i++) {
             if (
                 ViewList[i].authorUsername !=
                 this.state.userName
             )
                 continue;
-            arr.push(ViewList[i]);
+            stories.push(ViewList[i]);
         }
-        //console.log('ksehfi', arr);
+        const indexOfLastPost =
+            this.state.currentPage *
+            this.state.storiesPerPage;
+        const indexOfFirstPost =
+            indexOfLastPost - this.state.storiesPerPage;
+        const Stories = stories.slice(
+            indexOfFirstPost,
+            indexOfLastPost
+        );
         return (
             <PrintStories
-                data={arr}
-                userName={this.state.userName}
+                currentPage={this.state.currentPage}
+                data={Stories}
+                Paginate={this.Paginate}
+                mx={Math.ceil(
+                    stories.length /
+                        this.state.storiesPerPage
+                )}
             />
         );
     }

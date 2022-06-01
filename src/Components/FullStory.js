@@ -18,26 +18,24 @@ function getButtons(props) {
 }
 function PrintAStory(props) {
     return (
-        <div className="wrap">
-            <div className="container">
-                <div className="storyDetails">
-                    <div className="story-info">
-                        <StoryTitle story={props.story} />
-                        <div className="storyDate-text">
-                            Created at: &emsp;&emsp;&ensp;
-                            <GetDate
-                                date={props.story.createdAt}
-                            />
-                            Last Updated at:{' '}
-                            <GetDate
-                                date={props.story.updatedAt}
-                            />
-                        </div>
-                        <div className="storyBody">
-                            {props.story.storyDescription}
-                        </div>
-                        {getButtons(props)}
+        <div className="container">
+            <div className="storyDetails">
+                <div className="story-info">
+                    <StoryTitle story={props.story} />
+                    <div className="storyDate-text">
+                        Created at: &emsp;&emsp;&ensp;
+                        <GetDate
+                            date={props.story.createdAt}
+                        />
+                        Last Updated at:{' '}
+                        <GetDate
+                            date={props.story.updatedAt}
+                        />
                     </div>
+                    <div className="storyBody">
+                        {props.story.storyDescription}
+                    </div>
+                    {getButtons(props)}
                 </div>
             </div>
         </div>

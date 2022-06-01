@@ -66,7 +66,7 @@ export default class SignUp extends Component {
                 localStorage.getItem('successAlert')
             );
         } catch (err) {
-            console.log(err);
+            //
         }
     };
     render() {

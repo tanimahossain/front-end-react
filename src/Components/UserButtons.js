@@ -9,7 +9,6 @@ export default class UserButtons extends Component {
         //console.log(props);
     }
     handleDeleteChange = async () => {
-        console.log(localStorage.getItem('token'));
         const user = {};
         const config = {
             headers: {

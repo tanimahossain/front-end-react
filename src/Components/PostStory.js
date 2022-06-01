@@ -5,14 +5,10 @@ import '../styles/Story.css';
 import StoryPostButtons from './PostStoryButtons.js';
 function MakeAStory(props) {
     return (
-        <div className="wrap">
-            <div className="container">
-                <div className="storyDetails">
-                    <div className="story-info">
-                        <StoryPostButtons
-                            story={props.story}
-                        />
-                    </div>
+        <div className="container">
+            <div className="storyDetails">
+                <div className="story-info">
+                    <StoryPostButtons story={props.story} />
                 </div>
             </div>
         </div>
@@ -30,7 +26,7 @@ class PostAStory extends Component {
         };
     }
     //shouldComponentUpdate = () => false;
-    async componentDidMount() {
+    componentDidMount() {
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
         axios.defaults.headers = {
@@ -38,20 +34,17 @@ class PostAStory extends Component {
             Pragma: 'no-cache',
             Expires: '0',
         };
-        await axios
-            .get(baseUrl)
-            .then((response) => {
-                //console.log(response);
-                this.setState({
-                    ViewList: response.data.storyData,
-                });
-            })
-            .catch((err) => {
-                this.setState({
-                    doRedirect: true,
-                });
-                //console.log(err);
+        try {
+            const response = async () =>
+                await axios.get(baseUrl);
+            this.setState({
+                ViewList: response.data.storyData,
             });
+        } catch (err) {
+            this.setState({
+                doRedirect: true,
+            });
+        }
     }
     render() {
         const { ViewList } = this.state;

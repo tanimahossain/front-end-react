@@ -1,0 +1,39 @@
+.pagination {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  padding: 20px;
+}
+.wrapPages {
+  border: var(--navBarColor);
+  border-width: 0px;
+  border-style: solid inset;
+  border-radius: 5px;
+  display: flex;
+  margin: auto auto auto auto;
+  align-content: center;
+  overflow: hidden;
+  width: fit-content;
+  height: 100%;
+  align-self: center;
+}
+.page {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  margin: 0px;
+  padding: 10px;
+}
+.page:hover {
+  color: #9964b4;
+}
+.selected {
+  background-color: var(--navBarColor);
+  color: white;
+}

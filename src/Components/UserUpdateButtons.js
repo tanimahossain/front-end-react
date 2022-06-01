@@ -19,7 +19,6 @@ export default class PostStoryButtons extends Component {
         });
     };
     handleUpdateChange = async () => {
-        console.log(localStorage.getItem('token'));
         if (
             (this.state.password ||
                 this.state.confirmPassword) &&
@@ -45,12 +44,6 @@ export default class PostStoryButtons extends Component {
             },
         };
         const baseUrl = '/api/v1/users/';
-        console.log(
-            'baseUrl: ',
-            baseUrl,
-            this.state.fullName,
-            this.state.password
-        );
         //const navigate = useNavigate();
         axios.defaults.headers = {
             'Cache-Control': 'no-cache',
@@ -63,10 +56,6 @@ export default class PostStoryButtons extends Component {
                 story,
                 config
             );
-            //alert('story updated!');
-            //localStorage.setItem('loggedIn', false);
-            //navigate('/');
-            console.log(response);
             if (response.data.token) {
                 localStorage.setItem(
                     'token',
@@ -79,19 +68,22 @@ export default class PostStoryButtons extends Component {
                 '_self'
             );
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         }
     };
     render() {
         const baseUrl = localStorage.getItem('loggedIn')
             ? '/users/' + localStorage.getItem('userName')
             : '/homepage';
-        console.log('baseUrl: ', baseUrl);
         return (
-            <div className="wrap">
-                <div className="container">
-                    <div className="storyDetails">
-                        <div className="story-info">
+            <div className="container">
+                <div className="storyDetails">
+                    <div className="story-info">
+                        <form
+                            onSubmit={
+                                this.handleUpdateChange
+                            }
+                        >
                             <label>Change Full Name</label>
                             <textarea
                                 type="text"
@@ -129,15 +121,10 @@ export default class PostStoryButtons extends Component {
                                     Cancel
                                 </button>
                             </Link>
-                            <button
-                                className="UpdateStorybtn"
-                                onClick={
-                                    this.handleUpdateChange
-                                }
-                            >
+                            <button className="UpdateStorybtn">
                                 Update User
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

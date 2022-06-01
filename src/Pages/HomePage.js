@@ -22,6 +22,7 @@ function App() {
         toast.success(localStorage.getItem('successAlert'));
         //localStorage.removeItem('successAlert');
     }
+
     return (
         <div>
             <ToastContainer
@@ -29,7 +30,7 @@ function App() {
                 autoClose={2000}
             />
             <Navbar user={false} />
-            <Stories />
+            <Stories currentPage={params.id} />
         </div>
     );
 }

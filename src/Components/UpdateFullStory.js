@@ -6,14 +6,12 @@ import '../styles/Story.css';
 
 function PrintAStory(props) {
     return (
-        <div className="wrap">
-            <div className="container">
-                <div className="storyDetails">
-                    <div className="story-info">
-                        <StoryUpdateButtons
-                            story={props.story}
-                        />
-                    </div>
+        <div className="container">
+            <div className="storyDetails">
+                <div className="story-info">
+                    <StoryUpdateButtons
+                        story={props.story}
+                    />
                 </div>
             </div>
         </div>

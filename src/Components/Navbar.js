@@ -6,7 +6,7 @@ import {
 } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import logo from '../appLogo.png';
+import logo from '../appLogo - Copy.png';
 function SignUpLogIn() {
     return (
         <Link to="/auth" className="navSignUpLogIn">
@@ -71,7 +71,10 @@ function Navbar() {
         <div>
             <nav>
                 <Link to="/" className="noUnderLine">
-                    <img src={logo}></img>
+                    <img src={logo} />
+                    <span className="appLogo">
+                        Euphorolog
+                    </span>
                 </Link>
                 {auth}
             </nav>

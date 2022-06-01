@@ -30,8 +30,6 @@ export default class LogIn extends Component {
         await axios
             .post(baseUrl, user)
             .then((response) => {
-                //console.log(response);
-                //console.log(response);
                 localStorage.setItem(
                     'userName',
                     response.data.userName
@@ -44,12 +42,8 @@ export default class LogIn extends Component {
                 this.setState({
                     doRedirect: true,
                 });
-                //alert('user loggedIn successfully');
-                //window.location.reload();
             })
-            .catch((err) => {
-                console.log(err);
-            });
+            .catch((err) => {});
     };
     render() {
         if (

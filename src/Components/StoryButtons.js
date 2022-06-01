@@ -13,7 +13,6 @@ export default class StoryButtons extends Component {
         };
     }
     handleDeleteChange = async () => {
-        console.log(localStorage.getItem('token'));
         const story = {};
         const config = {
             headers: {
@@ -41,9 +40,8 @@ export default class StoryButtons extends Component {
     render() {
         const baseUrl =
             '/stories/' + this.state.storyId + '/edit';
-        console.log(baseUrl);
         return (
-            <div>
+            <>
                 <button
                     className="DeleteStorybtn"
                     onClick={this.handleDeleteChange}
@@ -55,7 +53,7 @@ export default class StoryButtons extends Component {
                         Update Story
                     </button>
                 </Link>
-            </div>
+            </>
         );
     }
 }

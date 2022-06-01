@@ -19,24 +19,21 @@ function getButtons(props) {
     return;
 }
 function PrintAUser(props) {
-    console.log(props.user.userName, !props.user.userName);
     if (!props.user.userName) {
         //return <Navigate to="/" />;
     }
     return (
-        <div className="wrap">
-            <div className="container bottonBorder">
-                <div className="userDetails">
-                    <div className="user">
-                        <div className="user-preview">
-                            <div className="story-info">
-                                <UserFullName
-                                    user={props.user}
-                                />
-                            </div>
+        <div className="container bottonBorder">
+            <div className="userDetails">
+                <div className="user">
+                    <div className="user-preview">
+                        <div className="story-info">
+                            <UserFullName
+                                user={props.user}
+                            />
                         </div>
-                        {getButtons(props)}
                     </div>
+                    {getButtons(props)}
                 </div>
             </div>
         </div>

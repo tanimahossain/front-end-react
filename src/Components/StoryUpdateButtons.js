@@ -20,7 +20,6 @@ export default class StoryUpdateButtons extends Component {
         });
     };
     handleUpdateChange = async () => {
-        console.log(localStorage.getItem('token'));
         const story = {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
@@ -34,7 +33,6 @@ export default class StoryUpdateButtons extends Component {
         };
         const baseUrl =
             '/api/v1/stories/' + this.props.story.storyId;
-        console.log('caseUrl: ', baseUrl);
         //const navigate = useNavigate();
         axios.defaults.headers = {
             'Cache-Control': 'no-cache',
@@ -42,21 +40,13 @@ export default class StoryUpdateButtons extends Component {
             Expires: '0',
         };
         try {
-            // await axios.put({
-            //     url: baseUrl,
-            //     data: story,
-            //     headers,
-            // });
             await axios.put(baseUrl, story, config);
-            //alert('story updated!');
-            //localStorage.setItem('loggedIn', false);
-            //navigate('/');
             window.open(
                 '/stories/' + this.props.story.storyId,
                 '_self'
             );
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         }
         return <Navigate to="/" />;
     };

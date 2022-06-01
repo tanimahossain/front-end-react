@@ -18,7 +18,6 @@ export default class PostStoryButtons extends Component {
         });
     };
     handleUpdateChange = async () => {
-        console.log(localStorage.getItem('token'));
         const story = {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
@@ -31,7 +30,6 @@ export default class PostStoryButtons extends Component {
             },
         };
         const baseUrl = '/api/v1/stories/';
-        console.log('caseUrl: ', baseUrl);
         //const navigate = useNavigate();
         axios.defaults.headers = {
             'Cache-Control': 'no-cache',
@@ -44,16 +42,12 @@ export default class PostStoryButtons extends Component {
                 story,
                 config
             );
-            //alert('story updated!');
-            //localStorage.setItem('loggedIn', false);
-            //navigate('/');
-            console.log(response);
             window.open(
                 '/stories/' + response.data.storyId,
                 '_self'
             );
         } catch (err) {
-            console.log(err);
+            //
         }
         return <Navigate to="/" />;
     };
@@ -61,52 +55,47 @@ export default class PostStoryButtons extends Component {
         const baseUrl = localStorage.getItem('loggedIn')
             ? '/users/' + localStorage.getItem('userName')
             : '/homepage';
-        console.log('baseUrl: ', baseUrl);
         return (
-            <div className="wrap">
-                <div className="container">
-                    <div className="storyDetails">
-                        <div className="story-info">
-                            <form
-                                onSubmit={
-                                    this.handleUpdateChange
+            <div className="container">
+                <div className="storyDetails">
+                    <div className="story-info">
+                        <form
+                            onSubmit={
+                                this.handleUpdateChange
+                            }
+                        >
+                            Story Title
+                            <textarea
+                                placeholder="Story Title..."
+                                name="storyTitle"
+                                className="editStoryTitle"
+                                onChange={
+                                    this.handleFieldChange
                                 }
-                            >
-                                Story Title
-                                <textarea
-                                    placeholder="Story Title..."
-                                    name="storyTitle"
-                                    className="editStoryTitle"
-                                    onChange={
-                                        this
-                                            .handleFieldChange
-                                    }
-                                    wrap="hard"
-                                    required
-                                />
-                                Story
-                                <textarea
-                                    type="text"
-                                    placeholder="Story Description...."
-                                    name="storyDescription"
-                                    className="editStoryBody"
-                                    onChange={
-                                        this
-                                            .handleFieldChange
-                                    }
-                                    wrap="hard"
-                                    required
-                                />
-                                <Link to={baseUrl}>
-                                    <button className="Cancelbtn">
-                                        Cancel
-                                    </button>
-                                </Link>
-                                <button className="UpdateStorybtn">
-                                    Post Story
+                                wrap="hard"
+                                required
+                            />
+                            Story
+                            <textarea
+                                type="text"
+                                placeholder="Story Description...."
+                                name="storyDescription"
+                                className="editStoryBody"
+                                onChange={
+                                    this.handleFieldChange
+                                }
+                                wrap="hard"
+                                required
+                            />
+                            <Link to={baseUrl}>
+                                <button className="Cancelbtn">
+                                    Cancel
                                 </button>
-                            </form>
-                        </div>
+                            </Link>
+                            <button className="UpdateStorybtn">
+                                Post Story
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

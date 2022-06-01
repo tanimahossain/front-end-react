@@ -1,5 +1,6 @@
 import {
     BrowserRouter,
+    Navigate,
     Route,
     // eslint-disable-next-line prettier/prettier
     Routes
@@ -54,7 +55,9 @@ function App() {
                     />
                     <Route
                         path="*"
-                        element={<HomePage />}
+                        element={
+                            <Navigate to="/homepage" />
+                        }
                     />
                 </Routes>
             </BrowserRouter>
