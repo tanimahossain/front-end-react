@@ -1,0 +1,62 @@
+.footer {
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  padding: 10px;
+
+  border-top: 2px solid var(--navBarColor);
+}
+
+.footerItem {
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  margin: auto;
+  text-align: center;
+  text-decoration: dashed;
+  color: var(--navBarColor);
+}
+
+.linkedInIcon {
+  font-size: 26px;
+  color: var(--navBarColor);
+}
+.linkedInIcon:hover {
+  color: var(--secondaryColor);
+}
+.githubIcon {
+  position: relative;
+  bottom: 3px;
+  font-size: 22px;
+  color: var(--navBarColor);
+}
+.githubIcon:hover {
+  color: var(--secondaryColor);
+}
+.emailIcon {
+  position: relative;
+  bottom: 3px;
+  font-size: 22px;
+  color: var(--navBarColor);
+}
+.emailIcon:hover {
+  color: var(--secondaryColor);
+}
+.messengerIcon {
+  position: relative;
+  bottom: 3px;
+  font-size: 22px;
+  color: var(--navBarColor);
+}
+.messengerIcon:hover {
+  color: var(--secondaryColor);
+}
+.callIcon {
+  position: relative;
+  bottom: 3px;
+  font-size: 20px;
+  color: var(--navBarColor);
+}
+.callIcon:hover {
+  color: var(--secondaryColor);
+}

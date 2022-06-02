@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
-import Navbar from '../Components/Navbar.js';
 import Stories from '../Components/StoryList.js';
 function App() {
     useEffect(() => {
@@ -29,7 +28,6 @@ function App() {
                 position="bottom-center"
                 autoClose={2000}
             />
-            <Navbar user={false} />
             <Stories currentPage={params.id} />
         </div>
     );

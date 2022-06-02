@@ -61,17 +61,4 @@ class Stories extends Component {
     }
 }
 
-// const [stories, setStories] = useState([]);
-// const [loading, setLoading] = useState(false);
-// const [currentPage, setCurrentPage] = useState(1);
-// const [storiesPerPage, setStoriesPerPage] =
-//     useState(10);
-// useEffect();
-// const indexOfLastPost = currentPage * storiesPerPage;
-// const indexOfFirstPost =
-//     indexOfLastPost - storiesPerPage;
-// const Stories = stories.slice(
-//     indexOfFirstPost,
-//     indexOfLastPost
-// );
 export default Stories;

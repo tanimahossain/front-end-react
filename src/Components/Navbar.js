@@ -70,7 +70,7 @@ function Navbar() {
     return (
         <div>
             <nav>
-                <Link to="/" className="noUnderLine">
+                <Link to="/" className="appLogoWrap">
                     <img src={logo} />
                     <span className="appLogo">
                         Euphorolog

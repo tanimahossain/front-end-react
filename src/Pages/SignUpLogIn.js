@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import LogInForm from '../Components/LogInForm.js';
-import Navbar from '../Components/Navbar.js';
 import SignUpForm from '../Components/SignUpForm.js';
 import '../styles/SignUp.css';
 
@@ -18,7 +17,6 @@ export default class SignUp extends Component {
                     position="bottom-center"
                     autoClose={2000}
                 />
-                <Navbar />
                 <div className="SignUpLogInBox">
                     <div className="sideBorder">
                         <div className="wrapSignUpLogIn">
