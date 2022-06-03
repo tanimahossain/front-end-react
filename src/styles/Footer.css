@@ -53,8 +53,8 @@
 }
 .callIcon {
   position: relative;
-  bottom: 3px;
-  font-size: 20px;
+  bottom: 4px;
+  font-size: 19px;
   color: var(--navBarColor);
 }
 .callIcon:hover {

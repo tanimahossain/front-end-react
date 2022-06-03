@@ -16,10 +16,7 @@ function PrintStories(props) {
     if (!List.length) {
         List = ['No Stories to Show'];
         ViewList = List.map((eStory) => (
-            <div
-                key={1}
-                className="container storyDetails story-info"
-            >
+            <div key={1} className="noStoriesToShow">
                 <h1>{eStory}</h1>
             </div>
         ));

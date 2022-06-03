@@ -69,3 +69,7 @@
   word-wrap: break-word;
   box-shadow: 2px 2px 8px var(--cardShadowColor) inset;
 }
+
+.noStoriesToShow {
+  text-align: center;
+}

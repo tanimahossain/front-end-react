@@ -1,7 +1,7 @@
 import '../App.css';
 import StoryTitle from './StoryTitle.js';
 
-function Story(props) {
+function StoryInfo(props) {
     return (
         <div className="story-info">
             <StoryTitle story={props.story} />
@@ -12,4 +12,4 @@ function Story(props) {
     );
 }
 
-export default Story;
+export default StoryInfo;

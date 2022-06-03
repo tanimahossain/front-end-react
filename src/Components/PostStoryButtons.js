@@ -10,6 +10,7 @@ export default class PostStoryButtons extends Component {
         this.state = {
             storyTitle: '',
             storyDescription: '',
+            doRedirect: '',
         };
     }
     handleFieldChange = (event) => {
@@ -17,7 +18,8 @@ export default class PostStoryButtons extends Component {
             [event.target.name]: event.target.value,
         });
     };
-    handleUpdateChange = async () => {
+    handleUpdateChange = async (event) => {
+        event.preventDefault();
         const story = {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
@@ -42,19 +44,22 @@ export default class PostStoryButtons extends Component {
                 story,
                 config
             );
-            window.open(
-                '/stories/' + response.data.storyId,
-                '_self'
-            );
+            this.setState({
+                doRedirect:
+                    '/stories/' + response.data.storyId,
+            });
+            console.log(this.state.doRedirect);
         } catch (err) {
             //
         }
-        return <Navigate to="/" />;
     };
     render() {
         const baseUrl = localStorage.getItem('loggedIn')
             ? '/users/' + localStorage.getItem('userName')
             : '/homepage';
+        if (this.state.doRedirect) {
+            return <Navigate to={this.state.doRedirect} />;
+        }
         return (
             <div className="container">
                 <div className="storyDetails">

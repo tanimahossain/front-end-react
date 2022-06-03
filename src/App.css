@@ -189,6 +189,8 @@ nav {
   color: white;
   text-decoration: none;
   padding: 10px;
+  position: relative;
+  top: 3px;
 }
 .logo {
   font-family: "Papyrus";
