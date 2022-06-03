@@ -4,16 +4,12 @@ import {
     // eslint-disable-next-line prettier/prettier
     AiOutlineUser
 } from 'react-icons/ai';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../App.css';
 import logo from '../appLogo - Copy.png';
 function SignUpLogIn() {
     return (
-        <NavLink
-            as={Link}
-            to="/auth"
-            className="navSignUpLogIn"
-        >
+        <Link to="/auth" className="navSignUpLogIn">
             <span className="icon">
                 <AiOutlineUser />
             </span>
@@ -22,7 +18,7 @@ function SignUpLogIn() {
                 <AiOutlineLogin />
             </span>
             LogIn
-        </NavLink>
+        </Link>
     );
 }
 function LogOut() {
@@ -40,8 +36,7 @@ function User() {
         '/users/' + localStorage.getItem('userName');
     return (
         <>
-            <NavLink
-                as={Link}
+            <Link
                 to="/auth"
                 className="navSignUpLogIn"
                 onClick={LogOut}
@@ -50,9 +45,8 @@ function User() {
                     <AiOutlineLogout />
                 </span>
                 LogOut
-            </NavLink>
-            <NavLink
-                as={Link}
+            </Link>
+            <Link
                 to={url}
                 className="navSignUpLogIn"
                 onClick={toUser}
@@ -61,7 +55,7 @@ function User() {
                     <AiOutlineUser />
                 </span>
                 {localStorage.getItem('userName')}
-            </NavLink>
+            </Link>
         </>
     );
 }
@@ -76,16 +70,12 @@ function Navbar() {
     return (
         <div>
             <nav>
-                <NavLink
-                    as={Link}
-                    to="/homepage"
-                    className="appLogoWrap"
-                >
+                <Link to="/" className="appLogoWrap">
                     <img src={logo} />
                     <span className="appLogo">
                         Euphorolog
                     </span>
-                </NavLink>
+                </Link>
                 {auth}
             </nav>
         </div>

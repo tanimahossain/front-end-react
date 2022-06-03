@@ -7,7 +7,8 @@ export function useAlertContext() {
 
 export function AlertProvider({ children }) {
     const [loading, setLoading] = useState(false);
-    const [successAlert, setSuccessAlert] = useState('');
+    const [successAlert, setSuccessAlert] =
+        useState('welcome');
     const [errorAlert, setErrorAlert] = useState('');
     function setAlert(name, value) {
         if (name === 'loading') {
