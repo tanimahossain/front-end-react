@@ -9,24 +9,23 @@ function Pagination(props) {
     if (props.currentPage) {
         currentPage = props.currentPage;
     }
-    if (props.totPage) {
-        endPage = props.totPage;
-    }
-    if (currentPage + 2 < endPage && currentPage > 3) {
+    if (currentPage + 2 < endPage) {
         endPage = currentPage + 2;
     }
-    if (props.startPage) {
-        startPage = props.startPage;
+    if (endPage < 5) {
+        endPage = 5;
     }
-    if (endPage - 4 > startPage) {
-        startPage = currentPage + 2;
+    if (
+        endPage - 4 > startPage &&
+        endPage - 4 <= currentPage
+    ) {
+        startPage = endPage - 4;
     }
     const pageNumbers = ['Prev'];
     for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
     }
     pageNumbers.push('Next');
-    console.log(currentPage);
     const ViewList = pageNumbers.map((pageNo, i) => (
         <PerPage
             key={i}

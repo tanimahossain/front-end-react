@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
+import Loading from './Loading.js';
 export default class PostStoryButtons extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +11,9 @@ export default class PostStoryButtons extends Component {
         this.state = {
             storyTitle: '',
             storyDescription: '',
-            doRedirect: '',
+            loading: false,
+            doRedirect: false,
+            error: '',
         };
     }
     handleFieldChange = (event) => {
@@ -39,6 +42,9 @@ export default class PostStoryButtons extends Component {
             Expires: '0',
         };
         try {
+            this.setState({
+                loading: true,
+            });
             const response = await axios.post(
                 baseUrl,
                 story,
@@ -50,8 +56,12 @@ export default class PostStoryButtons extends Component {
             });
             console.log(this.state.doRedirect);
         } catch (err) {
-            //
+            console.log(err.response.data.message);
+            this.setState({
+                error: err.response.data.message,
+            });
         }
+        this.setState({ loading: true });
     };
     render() {
         const baseUrl = localStorage.getItem('loggedIn')
@@ -64,6 +74,9 @@ export default class PostStoryButtons extends Component {
             <div className="container">
                 <div className="storyDetails">
                     <div className="story-info">
+                        <Loading
+                            loading={this.state.loading}
+                        />
                         <form
                             onSubmit={
                                 this.handleUpdateChange
@@ -100,6 +113,15 @@ export default class PostStoryButtons extends Component {
                             <button className="UpdateStorybtn">
                                 Post Story
                             </button>
+                            {this.state.error && (
+                                <div
+                                    name="error box"
+                                    className="errorAlertBox"
+                                    wrap="hard"
+                                >
+                                    {this.state.error}
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/InputText.css';
+import Loading from './Loading';
 export default class LogIn extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,9 @@ export default class LogIn extends Component {
         this.state = {
             userName: '',
             password: '',
+            loading: false,
             doRedirect: false,
+            error: '',
         };
     }
     handleFieldChange = (event) => {
@@ -27,33 +30,43 @@ export default class LogIn extends Component {
             password: this.state.password,
         };
         const baseUrl = '/api/v1/users/logIn';
-        await axios
-            .post(baseUrl, user)
-            .then((response) => {
-                localStorage.setItem(
-                    'userName',
-                    response.data.userName
-                );
-                localStorage.setItem(
-                    'token',
-                    response.data.token
-                );
-                localStorage.setItem('loggedIn', true);
-                this.setState({
-                    doRedirect: true,
-                });
-            })
-            .catch((err) => {});
+        try {
+            this.setState({ loading: true });
+            const response = await axios.post(
+                baseUrl,
+                user
+            );
+            localStorage.setItem(
+                'userName',
+                response.data.userName
+            );
+            localStorage.setItem(
+                'token',
+                response.data.token
+            );
+            localStorage.setItem('loggedIn', true);
+            this.setState({
+                doRedirect: true,
+            });
+        } catch (err) {
+            console.log(err.response.data.message);
+            this.setState({
+                error: err.response.data.message,
+            });
+        }
+        this.setState({ loading: false });
     };
     render() {
-        if (
-            this.state.doRedirect ||
-            localStorage.getItem('loggedIn')
-        ) {
+        if (this.state.doRedirect) {
+            this.setState({
+                doRedirect: false,
+            });
+            window.open('/', '_self');
             return <Navigate to="/" />;
         }
         return (
             <form onSubmit={this.handleSubmitChange}>
+                <Loading loading={this.state.loading} />
                 <input
                     required
                     type="text"
@@ -71,6 +84,16 @@ export default class LogIn extends Component {
                     onChange={this.handleFieldChange}
                 />
                 <button type="submit">Log In</button>
+
+                {this.state.error && (
+                    <div
+                        name="error box"
+                        className="errorAlertBox"
+                        wrap="hard"
+                    >
+                        {this.state.error}
+                    </div>
+                )}
             </form>
         );
     }

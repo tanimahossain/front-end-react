@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import '../styles/InputText.css';
@@ -15,7 +14,9 @@ export default class SignUp extends Component {
             eMail: '',
             password: '',
             confirmPassword: '',
+            loading: false,
             doRedirect: false,
+            error: '',
         };
     }
     handleFieldChange = (event) => {
@@ -29,7 +30,9 @@ export default class SignUp extends Component {
             this.state.password !==
             this.state.confirmPassword
         ) {
-            alert("passwords doesn't match");
+            this.setState({
+                error: "Passwords doesn't match each other",
+            });
             return;
         }
         const user = {
@@ -46,6 +49,9 @@ export default class SignUp extends Component {
             Expires: '0',
         };
         try {
+            this.setState({
+                loading: true,
+            });
             const response = await axios.post(
                 baseUrl,
                 user
@@ -59,36 +65,30 @@ export default class SignUp extends Component {
                 response.data.token
             );
             localStorage.setItem('loggedIn', true);
+            alert('User Created Succesfully');
             this.setState({
                 doRedirect: true,
             });
-            toast.success(
-                localStorage.getItem('successAlert')
-            );
         } catch (err) {
-            //
+            console.log(err.response.data.message);
+            this.setState({
+                error: err.response.data.message,
+            });
         }
+        this.setState({
+            loading: false,
+        });
     };
     render() {
         if (
             this.state.doRedirect ||
             localStorage.getItem('loggedIn')
         ) {
-            // localStorage.setItem(
-            //     'successAlert',
-            //     'User Created successfully'
-            // );
-            // toast.success(
-            //     localStorage.getItem('successAlert')
-            // );
+            window.open('/', '_self');
             return <Navigate to="/" />;
         }
         return (
             <>
-                <ToastContainer
-                    position="bottom-center"
-                    autoClose={2000}
-                />
                 <form onSubmit={this.handleSubmitChange}>
                     <input
                         required
@@ -132,6 +132,16 @@ export default class SignUp extends Component {
                         onChange={this.handleFieldChange}
                     />
                     <button type="submit">Sign Up</button>
+
+                    {this.state.error && (
+                        <div
+                            name="error box"
+                            className="errorAlertBox"
+                            wrap="hard"
+                        >
+                            {this.state.error}
+                        </div>
+                    )}
                 </form>
             </>
         );

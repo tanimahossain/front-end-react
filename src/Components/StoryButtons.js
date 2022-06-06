@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
+import Loading from './Loading.js';
 export default class StoryButtons extends Component {
     constructor(props) {
         super(props);
@@ -10,6 +11,7 @@ export default class StoryButtons extends Component {
         this.state = {
             ViewList: {},
             storyId: props.story.storyId,
+            loading: false,
         };
     }
     handleDeleteChange = async () => {
@@ -30,18 +32,25 @@ export default class StoryButtons extends Component {
             Expires: '0',
         };
         try {
+            this.setState({
+                loading: true,
+            });
             await axios.delete(baseUrl, config, story);
             alert('story deleted!');
             window.open('/', '_self');
         } catch {
             //console.log(err);
         }
+        this.setState({
+            loading: false,
+        });
     };
     render() {
         const baseUrl =
             '/stories/' + this.state.storyId + '/edit';
         return (
             <>
+                <Loading loading={this.state.loading} />
                 <button
                     className="DeleteStorybtn"
                     onClick={this.handleDeleteChange}

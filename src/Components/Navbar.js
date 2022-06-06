@@ -1,10 +1,11 @@
+import React, { Component } from 'react';
 import {
     AiOutlineLogin,
     AiOutlineLogout,
     // eslint-disable-next-line prettier/prettier
     AiOutlineUser
 } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import '../App.css';
 import logo from '../appLogo - Copy.png';
 function SignUpLogIn() {
@@ -25,19 +26,16 @@ function LogOut() {
     localStorage.removeItem('userName');
     localStorage.removeItem('token');
     localStorage.removeItem('loggedIn');
+    window.open('/auth', '_self');
 }
-function toUser() {
-    const userUrl =
-        '/users/' + localStorage.getItem('userName');
-    return <Navigate to={userUrl} />;
-}
-function User() {
-    const url =
-        '/users/' + localStorage.getItem('userName');
+function User({ userName }) {
+    const url = '/users/' + userName;
+    console.log('user', url);
     return (
         <>
-            <Link
-                to="/auth"
+            <NavLink
+                as={Link}
+                to="/auth/"
                 className="navSignUpLogIn"
                 onClick={LogOut}
             >
@@ -45,41 +43,66 @@ function User() {
                     <AiOutlineLogout />
                 </span>
                 LogOut
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
+                as={Link}
                 to={url}
                 className="navSignUpLogIn"
-                onClick={toUser}
             >
                 <span className="icon">
                     <AiOutlineUser />
                 </span>
-                {localStorage.getItem('userName')}
-            </Link>
+                {userName}
+            </NavLink>
         </>
     );
 }
+export default class Navbar extends Component {
+    constructor(props) {
+        super(props);
 
-function Navbar() {
-    const loggedIn = localStorage.getItem('loggedIn');
-    const auth = loggedIn ? (
-        <User userName={localStorage.getItem('userName')} />
-    ) : (
-        <SignUpLogIn />
-    );
-    return (
-        <div>
-            <nav>
-                <Link to="/" className="appLogoWrap">
-                    <img src={logo} />
-                    <span className="appLogo">
-                        Euphorolog
-                    </span>
-                </Link>
-                {auth}
-            </nav>
-        </div>
-    );
+        this.state = {
+            loggedIn: localStorage.getItem('loggedIn'),
+            userName: localStorage.getItem('userName'),
+            loading: false,
+            doRedirect: false,
+            error: '',
+        };
+    }
+    componentDidMount() {
+        if (localStorage.getItem('loggedIn')) {
+            this.setState({
+                loggedIn: true,
+                userName: localStorage.getItem('userName'),
+            });
+        } else {
+            this.setState({
+                loggedIn: false,
+                userName: '',
+                doRedirect: true,
+            });
+        }
+    }
+    render() {
+        console.log('username', this.state.userName);
+        const auth = this.state.loggedIn ? (
+            <User userName={this.state.userName} />
+        ) : (
+            <SignUpLogIn />
+        );
+        console.log(localStorage.getItem('loggedIn'));
+        return (
+            <div>
+                <nav>
+                    <Link to="/" className="appLogoWrap">
+                        <img src={logo} />
+                        <span className="appLogo">
+                            Euphorolog
+                        </span>
+                    </Link>
+                    {auth}
+                </nav>
+            </div>
+        );
+    }
 }
-
-export default Navbar;

@@ -4,7 +4,6 @@ import '../App.css';
 function StoryTitle(props) {
     const storyUrl = '/stories/' + props.story.storyId;
     const userUrl = '/users/' + props.story.authorUsername;
-    //console.log(storyUrl);
     return (
         <div className="storyTitle">
             <h3>

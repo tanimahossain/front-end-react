@@ -4,7 +4,9 @@ import { Navigate } from 'react-router-dom';
 import '../App.css';
 import StoryButtons from '../Components/StoryButtons.js';
 import GetDate from '../utils/DateFormat';
+import Loading from './Loading';
 import StoryTitle from './StoryTitle.js';
+
 function getButtons(props) {
     const loggedIn = localStorage.getItem('loggedIn');
     if (
@@ -41,19 +43,23 @@ function PrintAStory(props) {
         </div>
     );
 }
-
 class FullStory extends Component {
     constructor(props) {
         super(props);
         //console.log(props);
         this.state = {
             ViewList: {},
-            doRedirect: false,
             storyId: props.storyId,
+            doRedirect: false,
+            error: '',
+            loading: false,
         };
     }
     //shouldComponentUpdate = () => false;
     async componentDidMount() {
+        this.setState({
+            loading: true,
+        });
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
 
@@ -62,22 +68,27 @@ class FullStory extends Component {
             this.setState({
                 ViewList: response.data.storyData,
             });
+            this.setState({
+                loading: false,
+            });
         } catch (err) {
             this.setState({
                 doRedirect: true,
             });
         }
     }
-    static getDerivedStateFromError(error) {
-        return { doRedirect: true };
-    }
     render() {
         const { ViewList } = this.state;
         //console.log(ViewList);
         if (this.state.doRedirect) {
             return <Navigate to="/" />;
-        }
-        return <PrintAStory story={ViewList} />;
+        } else
+            return (
+                <>
+                    <Loading loading={this.state.loading} />
+                    <PrintAStory story={ViewList} />
+                </>
+            );
     }
 }
 export default FullStory;

@@ -23,6 +23,7 @@ class PostAStory extends Component {
             ViewList: {},
             storyId: props.storyId,
             doRedirect: false,
+            loading: false,
         };
     }
     //shouldComponentUpdate = () => false;
@@ -35,6 +36,7 @@ class PostAStory extends Component {
             Expires: '0',
         };
         try {
+            this.setState({ loading: true });
             const response = async () =>
                 await axios.get(baseUrl);
             this.setState({
@@ -45,6 +47,7 @@ class PostAStory extends Component {
                 doRedirect: true,
             });
         }
+        this.setState({ loading: false });
     }
     render() {
         const { ViewList } = this.state;
@@ -52,7 +55,12 @@ class PostAStory extends Component {
         if (this.state.doRedirect) {
             return <Navigate to="/stories/" />;
         }
-        return <MakeAStory story={ViewList} />;
+        return (
+            <>
+                <Loading loading={this.state.loading} />
+                <MakeAStory story={ViewList} />
+            </>
+        );
     }
 }
 export default PostAStory;

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import GetDate from '../utils/DateFormat.js';
 function Preview(props) {
-    const storyUrl = 'stories/' + props.storyId;
-    //console.log(storyUrl);
+    const storyUrl = '/stories/' + props.storyId;
     return (
         <div className="story-preview">
             <div className="storyDate-container">

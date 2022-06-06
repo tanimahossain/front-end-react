@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import '../App.css';
+import Loading from './Loading';
 import PrintStories from './PrintStories.js';
 
 class UserSpecificStoryList extends Component {
@@ -14,23 +15,29 @@ class UserSpecificStoryList extends Component {
             storiesPerPage: 5,
         };
     }
-    componentDidMount() {
+    async componentDidMount() {
+        this.setState({
+            loading: true,
+        });
         axios.defaults.headers = {
             'Cache-Control': 'no-cache',
             Pragma: 'no-cache',
             Expires: '0',
         };
-        axios
-            .get('/api/v1/stories/')
-            .then((response) => {
-                //console.log(response);
-                this.setState({
-                    ViewList: response.data.storyData,
-                });
-            })
-            .catch((err) => {
-                //console.log(err);
+        try {
+            const response = await axios.get(
+                '/api/v1/stories/'
+            );
+            this.setState({
+                ViewList: response.data.storyData,
             });
+            this.setState({
+                loading: false,
+            });
+        } catch (err) {
+            //
+        }
+        localStorage.removeItem('loading', false);
     }
     Paginate = (page) => {
         this.setState({
@@ -58,15 +65,18 @@ class UserSpecificStoryList extends Component {
             indexOfLastPost
         );
         return (
-            <PrintStories
-                currentPage={this.state.currentPage}
-                data={Stories}
-                Paginate={this.Paginate}
-                mx={Math.ceil(
-                    stories.length /
-                        this.state.storiesPerPage
-                )}
-            />
+            <>
+                <Loading loading={this.state.loading} />
+                <PrintStories
+                    currentPage={this.state.currentPage}
+                    data={Stories}
+                    Paginate={this.Paginate}
+                    mx={Math.ceil(
+                        stories.length /
+                            this.state.storiesPerPage
+                    )}
+                />
+            </>
         );
     }
 }

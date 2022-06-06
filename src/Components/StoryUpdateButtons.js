@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
+import Loading from './Loading';
 export default class StoryUpdateButtons extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +13,7 @@ export default class StoryUpdateButtons extends Component {
             storyTitle: this.props.story.storyTitle,
             storyDescription:
                 this.props.story.storyDescription,
+            loading: false,
         };
     }
     handleFieldChange = (event) => {
@@ -40,6 +42,9 @@ export default class StoryUpdateButtons extends Component {
             Expires: '0',
         };
         try {
+            this.setState({
+                loading: true,
+            });
             await axios.put(baseUrl, story, config);
             window.open(
                 '/stories/' + this.props.story.storyId,
@@ -48,47 +53,53 @@ export default class StoryUpdateButtons extends Component {
         } catch (err) {
             //console.log(err);
         }
-        return <Navigate to="/" />;
+        this.setState({
+            loading: false,
+        });
     };
     render() {
         const baseUrl =
             '/stories/' + this.props.story.storyId;
         console.log('baseUrl: ', baseUrl);
         return (
-            <form onSubmit={this.handleUpdateChange}>
-                Story Title
-                <textarea
-                    type="text"
-                    defaultValue={
-                        this.props.story.storyTitle
-                    }
-                    name="storyTitle"
-                    className="editStoryTitle"
-                    onChange={this.handleFieldChange}
-                    wrap="hard"
-                    required
-                />
-                Story
-                <textarea
-                    type="text"
-                    defaultValue={
-                        this.props.story.storyDescription
-                    }
-                    name="storyDescription"
-                    className="editStoryBody"
-                    onChange={this.handleFieldChange}
-                    wrap="hard"
-                    required
-                />
-                <Link to={baseUrl}>
-                    <button className="Cancelbtn">
-                        Cancel
+            <>
+                <Loading loading={this.state.loading} />
+                <form onSubmit={this.handleUpdateChange}>
+                    Story Title
+                    <textarea
+                        type="text"
+                        defaultValue={
+                            this.props.story.storyTitle
+                        }
+                        name="storyTitle"
+                        className="editStoryTitle"
+                        onChange={this.handleFieldChange}
+                        wrap="hard"
+                        required
+                    />
+                    Story
+                    <textarea
+                        type="text"
+                        defaultValue={
+                            this.props.story
+                                .storyDescription
+                        }
+                        name="storyDescription"
+                        className="editStoryBody"
+                        onChange={this.handleFieldChange}
+                        wrap="hard"
+                        required
+                    />
+                    <Link to={baseUrl}>
+                        <button className="Cancelbtn">
+                            Cancel
+                        </button>
+                    </Link>
+                    <button className="UpdateStorybtn">
+                        Update
                     </button>
-                </Link>
-                <button className="UpdateStorybtn">
-                    Update
-                </button>
-            </form>
+                </form>
+            </>
         );
     }
 }

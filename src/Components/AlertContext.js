@@ -1,53 +1,76 @@
-import React, { useContext, useState } from 'react';
+import React, { Component } from 'react';
 const AlertContext = React.createContext();
 
-export function useAlertContext() {
-    return useContext(AlertContext);
-}
-
-export function AlertProvider({ children }) {
-    const [loading, setLoading] = useState(false);
-    const [successAlert, setSuccessAlert] =
-        useState('welcome');
-    const [errorAlert, setErrorAlert] = useState('');
-    function setAlert(name, value) {
-        if (name === 'loading') {
-            setLoading(value);
-        } else if (name === 'success') {
-            setSuccessAlert(value);
-        } else {
-            setErrorAlert(value);
-        }
+// export function useAlertContext() {
+//     return useContext(AlertContext);
+// }
+//static contextType = AlertContext
+export class AlertProvider extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+            successAlert: '',
+            errorAlert: '',
+        };
     }
-    function getAlert(name) {
+    setAlert = (name, value) => {
         if (name === 'loading') {
-            return loading;
+            this.setState({
+                loading: value,
+            });
         } else if (name === 'success') {
-            return successAlert;
+            this.setState({
+                successAlert: value,
+            });
         } else {
-            return errorAlert;
+            this.setState({
+                errorAlert: value,
+            });
         }
-    }
-    function resetAlert(name) {
-        if (name === 'loading') {
-            setLoading(false);
-        } else if (name === 'success') {
-            setSuccessAlert('');
-        } else {
-            setErrorAlert('');
-        }
-    }
-    const value = {
-        loading,
-        successAlert,
-        errorAlert,
-        setAlert,
-        getAlert,
-        resetAlert,
     };
-    return (
-        <AlertContext.Provider value={value}>
-            {children}
-        </AlertContext.Provider>
-    );
+    getAlert = (name) => {
+        if (name === 'loading') {
+            return this.state.loading;
+        } else if (name === 'success') {
+            return this.state.successAlert;
+        } else {
+            return this.state.errorAlert;
+        }
+    };
+    resetAlert = (name) => {
+        if (name === 'loading') {
+            this.setState({
+                loading: false,
+            });
+        } else if (name === 'success') {
+            this.setState({
+                successAlert: '',
+            });
+        } else {
+            this.setState({
+                errorAlert: '',
+            });
+        }
+    };
+    render() {
+        const { loading, successAlert, errorAlert } =
+            this.state;
+        const { setAlert, getAlert, resetAlert } = this;
+        return (
+            <AlertContext.Provider
+                value={{
+                    loading,
+                    successAlert,
+                    errorAlert,
+                    setAlert,
+                    resetAlert,
+                    getAlert,
+                }}
+            >
+                {this.props.children}
+            </AlertContext.Provider>
+        );
+    }
 }
+export default AlertContext;
