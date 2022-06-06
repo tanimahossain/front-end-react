@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
+//import { Navigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import '../styles/InputText.css';
@@ -85,7 +85,6 @@ export default class SignUp extends Component {
             localStorage.getItem('loggedIn')
         ) {
             window.open('/', '_self');
-            return <Navigate to="/" />;
         }
         return (
             <>
