@@ -18,6 +18,13 @@ export default class LogIn extends Component {
             error: '',
         };
     }
+    ResetError = () => {
+        this.setState({
+            error: 'val',
+        });
+        console.log(this.state.error);
+        return (this.parentElement.style.display = 'none');
+    };
     handleFieldChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
@@ -31,7 +38,7 @@ export default class LogIn extends Component {
         };
         const baseUrl = '/api/v1/users/logIn';
         try {
-            this.setState({ loading: true });
+            this.setState({ loading: true, error: '' });
             const response = await axios.post(
                 baseUrl,
                 user
@@ -65,36 +72,44 @@ export default class LogIn extends Component {
             return <Navigate to="/" />;
         }
         return (
-            <form onSubmit={this.handleSubmitChange}>
-                <Loading loading={this.state.loading} />
-                <input
-                    required
-                    type="text"
-                    placeholder="Username"
-                    name="userName"
-                    onChange={this.handleFieldChange}
-                />
+            <>
+                <form onSubmit={this.handleSubmitChange}>
+                    <Loading loading={this.state.loading} />
+                    <input
+                        required
+                        type="text"
+                        placeholder="Username"
+                        name="userName"
+                        onChange={this.handleFieldChange}
+                    />
 
-                <input
-                    required
-                    type="password"
-                    placeholder="Enter password"
-                    value={this.state.password}
-                    name="password"
-                    onChange={this.handleFieldChange}
-                />
-                <button type="submit">Log In</button>
+                    <input
+                        required
+                        type="password"
+                        placeholder="Enter password"
+                        value={this.state.password}
+                        name="password"
+                        onChange={this.handleFieldChange}
+                    />
+                    <button type="submit">Log In</button>
+                </form>
 
                 {this.state.error && (
                     <div
-                        name="error box"
+                        name="errorbox"
                         className="errorAlertBox"
                         wrap="hard"
                     >
+                        <span
+                            className="closebtn"
+                            onclick={this.ResetError}
+                        >
+                            &times;
+                        </span>
                         {this.state.error}
                     </div>
                 )}
-            </form>
+            </>
         );
     }
 }

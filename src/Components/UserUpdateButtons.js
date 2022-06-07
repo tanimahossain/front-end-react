@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/Profile.css';
+import ErrorAlert from './ErrorAlert.js';
 import Loading from './Loading';
 export default class PostStoryButtons extends Component {
     constructor(props) {
@@ -28,6 +29,17 @@ export default class PostStoryButtons extends Component {
             this.state.password &&
             this.state.password !==
                 this.state.confirmPassword
+        ) {
+            this.setState({
+                error: "Passwords doesn't match each other",
+            });
+            return;
+        }
+        if (
+            (this.state.password &&
+                !this.state.confirmPassword) ||
+            (!this.state.password &&
+                this.state.confirmPassword)
         ) {
             this.setState({
                 error: "Passwords doesn't match each other",
@@ -163,16 +175,9 @@ export default class PostStoryButtons extends Component {
                                 <button className="UpdateStorybtn">
                                     Update User
                                 </button>
-
-                                {this.state.error && (
-                                    <div
-                                        name="error box"
-                                        className="errorAlertBox"
-                                        wrap="hard"
-                                    >
-                                        {this.state.error}
-                                    </div>
-                                )}
+                                <ErrorAlert
+                                    error={this.state.error}
+                                />
                             </form>
                         </div>
                     </div>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
+import LogOut from '../utils/LogOut.js';
 import Loading from './Loading.js';
 export default class StoryButtons extends Component {
     constructor(props) {
@@ -38,8 +39,12 @@ export default class StoryButtons extends Component {
             await axios.delete(baseUrl, config, story);
             alert('story deleted!');
             window.open('/', '_self');
-        } catch {
-            //console.log(err);
+        } catch (err) {
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            console.log(err);
+            console.log(err.response.status);
         }
         this.setState({
             loading: false,

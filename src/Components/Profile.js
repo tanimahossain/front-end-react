@@ -7,7 +7,7 @@ import UserButtons from '../Components/UserButtons.js';
 import UserFullName from '../Components/UserFullName.js';
 import '../styles/Profile.css';
 import Loading from './Loading';
-function getButtons(props) {
+const GetButtons = (props) => {
     const navigate = useNavigate();
     const loggedIn = localStorage.getItem('loggedIn');
     if (
@@ -18,7 +18,7 @@ function getButtons(props) {
         return <UserButtons navigate={navigate} />;
     }
     return;
-}
+};
 function PrintAUser(props) {
     if (!props.user.userName) {
         //return <Navigate to="/" />;
@@ -34,7 +34,7 @@ function PrintAUser(props) {
                             />
                         </div>
                     </div>
-                    {getButtons(props)}
+                    {GetButtons(props)}
                 </div>
             </div>
         </div>

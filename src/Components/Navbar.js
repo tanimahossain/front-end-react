@@ -5,9 +5,10 @@ import {
     // eslint-disable-next-line prettier/prettier
     AiOutlineUser
 } from 'react-icons/ai';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, Navigate, NavLink } from 'react-router-dom';
 import '../App.css';
 import logo from '../appLogo - Copy.png';
+import LogOut from '../utils/LogOut';
 function SignUpLogIn() {
     return (
         <Link to="/auth" className="navSignUpLogIn">
@@ -21,12 +22,6 @@ function SignUpLogIn() {
             LogIn
         </Link>
     );
-}
-function LogOut() {
-    localStorage.removeItem('userName');
-    localStorage.removeItem('token');
-    localStorage.removeItem('loggedIn');
-    window.open('/auth', '_self');
 }
 function User({ userName }) {
     const url = '/users/' + userName;
@@ -48,6 +43,7 @@ function User({ userName }) {
                 as={Link}
                 to={url}
                 className="navSignUpLogIn"
+                onClick={<Navigate to={url} />}
             >
                 <span className="icon">
                     <AiOutlineUser />
@@ -90,7 +86,6 @@ export default class Navbar extends Component {
         ) : (
             <SignUpLogIn />
         );
-        console.log(localStorage.getItem('loggedIn'));
         return (
             <div>
                 <nav>

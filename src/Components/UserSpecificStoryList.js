@@ -16,15 +16,15 @@ class UserSpecificStoryList extends Component {
         };
     }
     async componentDidMount() {
-        this.setState({
-            loading: true,
-        });
         axios.defaults.headers = {
             'Cache-Control': 'no-cache',
             Pragma: 'no-cache',
             Expires: '0',
         };
         try {
+            this.setState({
+                loading: false,
+            });
             const response = await axios.get(
                 '/api/v1/stories/'
             );
@@ -37,7 +37,9 @@ class UserSpecificStoryList extends Component {
         } catch (err) {
             //
         }
-        localStorage.removeItem('loading', false);
+        this.setState({
+            loading: false,
+        });
     }
     Paginate = (page) => {
         this.setState({
@@ -64,6 +66,7 @@ class UserSpecificStoryList extends Component {
             indexOfFirstPost,
             indexOfLastPost
         );
+        console.log(this.state.loading);
         return (
             <>
                 <Loading loading={this.state.loading} />

@@ -7,7 +7,7 @@ import GetDate from '../utils/DateFormat';
 import Loading from './Loading';
 import StoryTitle from './StoryTitle.js';
 
-function getButtons(props) {
+function GetButtons(props) {
     const loggedIn = localStorage.getItem('loggedIn');
     if (
         loggedIn &&
@@ -37,7 +37,7 @@ function PrintAStory(props) {
                     <div className="storyBody">
                         {props.story.storyDescription}
                     </div>
-                    {getButtons(props)}
+                    {GetButtons(props)}
                 </div>
             </div>
         </div>
@@ -55,7 +55,6 @@ class FullStory extends Component {
             loading: false,
         };
     }
-    //shouldComponentUpdate = () => false;
     async componentDidMount() {
         this.setState({
             loading: true,

@@ -51,6 +51,7 @@ export default class SignUp extends Component {
         try {
             this.setState({
                 loading: true,
+                error: '',
             });
             const response = await axios.post(
                 baseUrl,

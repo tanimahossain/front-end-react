@@ -7,6 +7,25 @@ import SignUpForm from '../Components/SignUpForm.js';
 import '../styles/SignUp.css';
 
 export default class SignUp extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            signUp: '',
+            logIn: '',
+        };
+    }
+    SetError = (val, field) => {
+        if (field == 'logIn') {
+            this.setState({
+                logIn: val,
+            });
+        } else {
+            this.setState({
+                signUp: val,
+            });
+        }
+        console.log(this.state.logIn, this.state.signUp);
+    };
     render() {
         if (localStorage.getItem('errorAlert')) {
             toast.error(localStorage.getItem('errorAlert'));
@@ -20,7 +39,10 @@ export default class SignUp extends Component {
                             <h3 className="boxTitle">
                                 Sign Up
                             </h3>
-                            <SignUpForm />
+                            <SignUpForm
+                                error={this.state.signUp}
+                                SetError={this.SetError}
+                            />
                         </div>
                     </div>
                     <div>
@@ -28,7 +50,10 @@ export default class SignUp extends Component {
                             <h3 className="boxTitle">
                                 Log In
                             </h3>
-                            <LogInForm />
+                            <LogInForm
+                                error={this.state.logIn}
+                                SetError={this.SetError}
+                            />
                         </div>
                     </div>
                 </div>

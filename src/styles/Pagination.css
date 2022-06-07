@@ -29,9 +29,21 @@
   height: fit-content;
   margin: 0px;
   padding: 10px;
+  cursor: pointer;
 }
 .page:hover {
   color: #9964b4;
+}
+.notPage {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  margin: 0px;
+  padding: 10px;
+  cursor: default;
 }
 .selected {
   background-color: var(--navBarColor);

@@ -13,7 +13,7 @@ function PerPage(props) {
     const startPage = props.startPage;
     const prevPage = currentPage - 1 ? currentPage - 1 : 1;
     const nextPage =
-        currentPage + 1 <= mx ? currentPage + 1 : endPage;
+        currentPage + 1 <= mx ? currentPage + 1 : mx;
     //return <span className="page">{pageNo}</span>;
     if (pageNo == currentPage) {
         return (
@@ -25,10 +25,10 @@ function PerPage(props) {
             </span>
         );
     } else if (pageNo === 'Prev') {
-        if (pageNo === startPage) {
+        if (1 === currentPage) {
             return (
                 <>
-                    <span className="page">
+                    <span className="notPage">
                         <span className="icon">
                             <FaChevronLeft />
                         </span>
@@ -51,10 +51,12 @@ function PerPage(props) {
             </>
         );
     } else if (pageNo === 'Next') {
+        const styleClassName =
+            currentPage === mx ? 'notPage' : 'page';
         return (
             <>
                 <span
-                    className="page"
+                    className={styleClassName}
                     onClick={() => props.Paginate(nextPage)}
                 >
                     {pageNo}
@@ -65,7 +67,7 @@ function PerPage(props) {
             </>
         );
     } else if (pageNo > mx) {
-        return <span className="page">{pageNo}</span>;
+        return <span className="notPage">{pageNo}</span>;
     } else {
         return (
             <span

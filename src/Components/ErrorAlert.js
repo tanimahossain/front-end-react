@@ -1,8 +1,20 @@
 import '../App.css';
 function ErrorAlert(props) {
+    if (!props.error) return <></>;
+    console.log(props.ResetError.toString());
     return (
-        <div className="errorAlert">
-            {props.errorMessage}
+        <div
+            name="errorbox"
+            className="errorAlertBox"
+            wrap="hard"
+        >
+            <span
+                className="closebtn"
+                onclick={() => props.ResetError()}
+            >
+                &times;
+            </span>
+            {props.error}
         </div>
     );
 }
