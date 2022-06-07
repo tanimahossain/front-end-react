@@ -8,9 +8,7 @@ import '../styles/Pagination.css';
 function PerPage(props) {
     const mx = props.mx;
     const currentPage = props.currentPage;
-    const endPage = props.endPage;
     const pageNo = props.pageNo;
-    const startPage = props.startPage;
     const prevPage = currentPage - 1 ? currentPage - 1 : 1;
     const nextPage =
         currentPage + 1 <= mx ? currentPage + 1 : mx;

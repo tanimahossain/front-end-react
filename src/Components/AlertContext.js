@@ -14,6 +14,18 @@ export class AlertProvider extends Component {
             errorAlert: '',
         };
     }
+    setAuth = (flag, uname, jwtToken) => {
+        this.setState({
+            isLoggedIn: flag,
+            userName: uname,
+            token: jwtToken,
+        });
+        console.log(
+            this.state.isLoggedIn,
+            this.state.userName,
+            this.state.token
+        );
+    };
     setAlert = (name, value) => {
         if (name === 'loading') {
             this.setState({
@@ -56,7 +68,8 @@ export class AlertProvider extends Component {
     render() {
         const { loading, successAlert, errorAlert } =
             this.state;
-        const { setAlert, getAlert, resetAlert } = this;
+        const { setAlert, getAlert, resetAlert, setAuth } =
+            this;
         return (
             <AlertContext.Provider
                 value={{
@@ -66,6 +79,7 @@ export class AlertProvider extends Component {
                     setAlert,
                     resetAlert,
                     getAlert,
+                    setAuth,
                 }}
             >
                 {this.props.children}

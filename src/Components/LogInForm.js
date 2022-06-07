@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/InputText.css';
+import AlertContext from './AlertContext';
 import Loading from './Loading';
 export default class LogIn extends Component {
     constructor(props) {
@@ -20,10 +21,8 @@ export default class LogIn extends Component {
     }
     ResetError = () => {
         this.setState({
-            error: 'val',
+            error: '',
         });
-        console.log(this.state.error);
-        return (this.parentElement.style.display = 'none');
     };
     handleFieldChange = (event) => {
         this.setState({
@@ -55,6 +54,11 @@ export default class LogIn extends Component {
             this.setState({
                 doRedirect: true,
             });
+            this.context.setAuth(
+                true,
+                response.data.userName,
+                response.data.token
+            );
         } catch (err) {
             console.log(err.response.data.message);
             this.setState({
@@ -63,12 +67,15 @@ export default class LogIn extends Component {
         }
         this.setState({ loading: false });
     };
+    stateChange = () => {
+        this.setState({
+            doRedirect: false,
+        });
+    };
     render() {
         if (this.state.doRedirect) {
-            this.setState({
-                doRedirect: false,
-            });
-            window.open('/', '_self');
+            this.stateChange();
+            //window.open('/', '_self');
             return <Navigate to="/" />;
         }
         return (
@@ -102,7 +109,7 @@ export default class LogIn extends Component {
                     >
                         <span
                             className="closebtn"
-                            onclick={this.ResetError}
+                            onClick={this.ResetError}
                         >
                             &times;
                         </span>
@@ -113,3 +120,4 @@ export default class LogIn extends Component {
         );
     }
 }
+LogIn.contextType = AlertContext;

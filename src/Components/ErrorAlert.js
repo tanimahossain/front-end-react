@@ -1,7 +1,7 @@
 import '../App.css';
 function ErrorAlert(props) {
     if (!props.error) return <></>;
-    console.log(props.ResetError.toString());
+    //console.log(props.ResetError.toString());
     return (
         <div
             name="errorbox"
@@ -10,7 +10,7 @@ function ErrorAlert(props) {
         >
             <span
                 className="closebtn"
-                onclick={() => props.ResetError()}
+                onClick={() => props.ResetError()}
             >
                 &times;
             </span>

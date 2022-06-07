@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import '../styles/InputText.css';
+import ErrorAlert from './ErrorAlert';
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +20,11 @@ export default class SignUp extends Component {
             error: '',
         };
     }
+    ResetError = () => {
+        this.setState({
+            error: '',
+        });
+    };
     handleFieldChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
@@ -133,15 +139,10 @@ export default class SignUp extends Component {
                     />
                     <button type="submit">Sign Up</button>
 
-                    {this.state.error && (
-                        <div
-                            name="error box"
-                            className="errorAlertBox"
-                            wrap="hard"
-                        >
-                            {this.state.error}
-                        </div>
-                    )}
+                    <ErrorAlert
+                        error={this.state.error}
+                        ResetError={this.ResetError}
+                    />
                 </form>
             </>
         );

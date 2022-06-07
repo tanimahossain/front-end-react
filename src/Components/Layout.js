@@ -15,7 +15,7 @@ class Layout extends Component {
         super(props);
         this.state = {
             userName: localStorage.getItem('userName'),
-            loggedIn: localStorage.getItem('loggedIn'),
+            isLoggedIn: localStorage.getItem('loggedIn'),
             token: localStorage.getItem('token'),
         };
     }
@@ -29,7 +29,9 @@ class Layout extends Component {
     render() {
         return (
             <>
-                <Navbar />
+                <Navbar
+                    isLoggedIn={this.state.isLoggedIn}
+                />
                 <div className="navDiv"></div>
                 {this.props.children}
                 <Footer />
@@ -38,3 +40,10 @@ class Layout extends Component {
     }
 }
 export default Layout;
+/*
+                {this.props.children}
+                {React.cloneElement(this.props.children, {
+                    setAuth: this.setAuth,
+                })}
+
+*/

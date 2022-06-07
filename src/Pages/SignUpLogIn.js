@@ -1,6 +1,7 @@
 //import SignUpForm from '../Components/SignUpForm.js';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
+import AlertContext from '../Components/AlertContext.js';
 import LogInForm from '../Components/LogInForm.js';
 //import Navbar from '../Components/Navbar.js';
 import SignUpForm from '../Components/SignUpForm.js';
@@ -31,6 +32,7 @@ export default class SignUp extends Component {
             toast.error(localStorage.getItem('errorAlert'));
             localStorage.removeItem('errorAlert');
         }
+        console.log(this.context);
         return (
             <>
                 <div className="SignUpLogInBox">
@@ -53,6 +55,7 @@ export default class SignUp extends Component {
                             <LogInForm
                                 error={this.state.logIn}
                                 SetError={this.SetError}
+                                setAuth={this.props.setAuth}
                             />
                         </div>
                     </div>
@@ -61,3 +64,4 @@ export default class SignUp extends Component {
         );
     }
 }
+SignUp.contextType = AlertContext;
