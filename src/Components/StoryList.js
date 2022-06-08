@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import '../App.css';
-import Loading from './Loading';
+import AllContext from './AllContext';
 import PrintStories from './PrintStories.js';
 
 class Stories extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -15,34 +16,19 @@ class Stories extends Component {
         };
     }
     async componentDidMount() {
-        this.setState({
-            loading: true,
-        });
-        axios.defaults.headers = {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            Expires: '0',
-        };
+        const { setAlert } = this.context;
+        setAlert('loading', true);
         try {
-            this.setState({
-                loading: true,
-            });
             const response = await axios.get(
                 '/api/v1/stories/'
             );
-
             this.setState({
                 stories: response.data.storyData,
             });
-            this.setState({
-                loading: false,
-            });
         } catch (err) {
-            //
+            alert(err);
         }
-        this.setState({
-            loading: false,
-        });
+        setAlert('loading', false);
     }
     Paginate = (page) => {
         this.setState({
@@ -62,7 +48,6 @@ class Stories extends Component {
         );
         return (
             <>
-                <Loading loading={this.state.loading} />
                 <PrintStories
                     currentPage={this.state.currentPage}
                     data={Stories}

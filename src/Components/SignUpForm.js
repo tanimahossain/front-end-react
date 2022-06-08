@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-//import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
 import '../styles/InputText.css';
+import AllContext from './AllContext';
 import ErrorAlert from './ErrorAlert';
 export default class SignUp extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
 
@@ -15,8 +17,6 @@ export default class SignUp extends Component {
             eMail: '',
             password: '',
             confirmPassword: '',
-            loading: false,
-            doRedirect: false,
             error: '',
         };
     }
@@ -32,10 +32,9 @@ export default class SignUp extends Component {
     };
     handleSubmitChange = async (event) => {
         event.preventDefault();
-        if (
-            this.state.password !==
-            this.state.confirmPassword
-        ) {
+        const { setState } = this;
+        const { password, confirmPassword } = this.state;
+        if (password !== confirmPassword) {
             this.setState({
                 error: "Passwords doesn't match each other",
             });
@@ -45,53 +44,39 @@ export default class SignUp extends Component {
             userName: this.state.userName,
             fullName: this.state.fullName,
             eMail: this.state.eMail,
-            password: this.state.password,
+            password: password,
         };
-        //console.log(this.state);
         const baseUrl = '/api/v1/users/';
-        axios.defaults.headers = {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            Expires: '0',
-        };
+        const { setAlert, setRedirect, setAuth } =
+            this.context;
         try {
-            this.setState({
-                loading: true,
+            setAlert('loading', true);
+            setState({
                 error: '',
             });
             const response = await axios.post(
                 baseUrl,
                 user
             );
-            localStorage.setItem(
-                'userName',
-                response.data.userName
-            );
-            localStorage.setItem(
-                'token',
+            setRedirect(true);
+            setAuth(
+                true,
+                response.data.userName,
                 response.data.token
             );
-            localStorage.setItem('loggedIn', true);
             alert('User Created Succesfully');
-            this.setState({
-                doRedirect: true,
-            });
         } catch (err) {
-            console.log(err.response.data.message);
-            this.setState({
+            setState({
                 error: err.response.data.message,
             });
         }
-        this.setState({
-            loading: false,
-        });
+        setAlert('loading', false);
     };
     render() {
-        if (
-            this.state.doRedirect ||
-            localStorage.getItem('loggedIn')
-        ) {
-            window.open('/', '_self');
+        const { doRedirect, setRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
+            return <Navigate to="/" />;
         }
         return (
             <>

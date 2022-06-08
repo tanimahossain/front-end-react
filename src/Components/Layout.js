@@ -1,37 +1,33 @@
 import React, { Component } from 'react';
-// import { toast, ToastContainer } from 'react-toastify';
+//import { toast, ToastContainer } from 'react-toastify';
 // <ToastContainer
 //     position="bottom-center"
 //     autoClose={2000}
 // />
+/*
+
+        if (successAlert) {
+            toast.success(successAlert);
+            setTimeout(
+                () => this.context.setAlert('success', ''),
+                2100
+            );
+        }
+ */
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
-import AlertContext from './AlertContext';
+import AllContext from './AllContext';
 import Footer from './Footer';
+import Loading from './Loading';
 import Navbar from './Navbar';
 class Layout extends Component {
-    static contextType = AlertContext;
-    constructor(props) {
-        super(props);
-        this.state = {
-            userName: localStorage.getItem('userName'),
-            isLoggedIn: localStorage.getItem('loggedIn'),
-            token: localStorage.getItem('token'),
-        };
-    }
-    componentDidMount() {
-        this.setState({
-            userName: localStorage.getItem('userName'),
-            loggedIn: localStorage.getItem('loggedIn'),
-            token: localStorage.getItem('token'),
-        });
-    }
+    static contextType = AllContext;
     render() {
+        const { isLoading } = this.context;
         return (
             <>
-                <Navbar
-                    isLoggedIn={this.state.isLoggedIn}
-                />
+                <Loading loading={isLoading} />
+                <Navbar />
                 <div className="navDiv"></div>
                 {this.props.children}
                 <Footer />

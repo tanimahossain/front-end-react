@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
-import Loading from './Loading';
+import AllContext from './AllContext';
+import ErrorAlert from './ErrorAlert';
 export default class StoryUpdateButtons extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
         //console.log(props);
@@ -13,9 +15,14 @@ export default class StoryUpdateButtons extends Component {
             storyTitle: this.props.story.storyTitle,
             storyDescription:
                 this.props.story.storyDescription,
-            loading: false,
+            hereRedirect: false,
         };
     }
+    ResetError = () => {
+        this.setState({
+            error: '',
+        });
+    };
     handleFieldChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
@@ -26,44 +33,44 @@ export default class StoryUpdateButtons extends Component {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
         };
+        const { setAlert, setRedirect, token } =
+            this.context;
+        setAlert('loading', true);
         const config = {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem(
-                    'token'
-                )}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         const baseUrl =
             '/api/v1/stories/' + this.props.story.storyId;
-        //const navigate = useNavigate();
-        axios.defaults.headers = {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            Expires: '0',
-        };
         try {
-            this.setState({
-                loading: true,
-            });
             await axios.put(baseUrl, story, config);
-            window.open(
-                '/stories/' + this.props.story.storyId,
-                '_self'
-            );
+            //setRedirect(true);
+            this.setState({
+                hereRedirect: true,
+            });
         } catch (err) {
-            //console.log(err);
+            console.log(err);
         }
-        this.setState({
-            loading: false,
-        });
+        setAlert('loading', false);
     };
     render() {
-        const baseUrl =
-            '/stories/' + this.props.story.storyId;
-        console.log('baseUrl: ', baseUrl);
+        const baseUrl = '/stories/' + this.props.storyId;
+        const { doRedirect, setRedirect } = this.context;
+        console.log(
+            'baseUrl: ',
+            baseUrl,
+            this.state.hereRedirect,
+            this.props.storyId
+        );
+        if (this.state.hereRedirect) {
+            this.setState({
+                hereRedirect: false,
+            });
+            return <Navigate to={baseUrl} />;
+        }
         return (
             <>
-                <Loading loading={this.state.loading} />
                 <form onSubmit={this.handleUpdateChange}>
                     Story Title
                     <textarea
@@ -98,6 +105,10 @@ export default class StoryUpdateButtons extends Component {
                     <button className="UpdateStorybtn">
                         Update
                     </button>
+                    <ErrorAlert
+                        error={this.state.error}
+                        ResetError={this.ResetError}
+                    />
                 </form>
             </>
         );

@@ -291,12 +291,14 @@ nav {
 }
 .Loading {
   margin: auto;
+  margin-top: 250px;
   padding: auto;
   width: 80%;
-  height: 200px;
   align-items: center;
   text-align: center;
   align-self: center;
+  justify-content: center;
+  transform: rotate(45deg);
 }
 .errorAlertBox {
   padding: 15px;

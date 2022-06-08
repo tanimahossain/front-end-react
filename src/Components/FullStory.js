@@ -4,20 +4,9 @@ import { Navigate } from 'react-router-dom';
 import '../App.css';
 import StoryButtons from '../Components/StoryButtons.js';
 import GetDate from '../utils/DateFormat';
-import Loading from './Loading';
+import AllContext from './AllContext';
 import StoryTitle from './StoryTitle.js';
 
-function GetButtons(props) {
-    const loggedIn = localStorage.getItem('loggedIn');
-    if (
-        loggedIn &&
-        localStorage.getItem('userName') ==
-            props.story.authorUsername
-    ) {
-        return <StoryButtons story={props.story} />;
-    }
-    return;
-}
 function PrintAStory(props) {
     return (
         <div className="container">
@@ -37,54 +26,57 @@ function PrintAStory(props) {
                     <div className="storyBody">
                         {props.story.storyDescription}
                     </div>
-                    {GetButtons(props)}
+                    <StoryButtons
+                        story={props.story}
+                        storyId={props.story.storyId}
+                        userName={
+                            props.story.authorUsername
+                        }
+                    />
                 </div>
             </div>
         </div>
     );
 }
 class FullStory extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
         //console.log(props);
         this.state = {
             ViewList: {},
             storyId: props.storyId,
-            doRedirect: false,
             error: '',
-            loading: false,
         };
     }
     async componentDidMount() {
+        const { setRedirect, setAlert } = this.context;
         this.setState({
             loading: true,
         });
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
-
+        setAlert('loading', true);
         try {
             const response = await axios.get(baseUrl);
             this.setState({
                 ViewList: response.data.storyData,
             });
-            this.setState({
-                loading: false,
-            });
         } catch (err) {
-            this.setState({
-                doRedirect: true,
-            });
+            alert(err);
+            setRedirect(true);
         }
+        setAlert('loading', false);
     }
     render() {
+        const { doRedirect, setRedirect } = this.context;
         const { ViewList } = this.state;
-        //console.log(ViewList);
-        if (this.state.doRedirect) {
+        if (doRedirect) {
+            setRedirect(false);
             return <Navigate to="/" />;
         } else
             return (
                 <>
-                    <Loading loading={this.state.loading} />
                     <PrintAStory story={ViewList} />
                 </>
             );

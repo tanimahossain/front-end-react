@@ -3,16 +3,18 @@ import React, { Component } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/Profile.css';
+import AllContext from './AllContext';
 export default class UserButtons extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
-        //console.log(props);
         this.state = {
             loading: true,
             doRedirect: false,
         };
     }
     handleDeleteChange = async () => {
+        const { LogOut } = this.context;
         const user = {};
         const config = {
             headers: {
@@ -22,21 +24,14 @@ export default class UserButtons extends Component {
                 )}`,
             },
         };
-        axios.defaults.headers = {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            Expires: '0',
-        };
         const baseUrl = '/api/v1/users/';
         //const navigate = useNavigate();
         try {
             this.setState({ loading: true });
             await axios.delete(baseUrl, config, user);
             this.setState({ loading: false });
+            LogOut();
             alert('User deleted!');
-            localStorage.removeItem('userName');
-            localStorage.removeItem('token');
-            localStorage.removeItem('loggedIn');
 
             this.setState({ doRedirect: true });
         } catch {
@@ -44,6 +39,8 @@ export default class UserButtons extends Component {
         }
     };
     render() {
+        const { isLoggedIn } = this.context;
+        if (!isLoggedIn) return;
         if (this.state.doRedirect) {
             this.setState({ doRedirect: false });
             return <Navigate to="/" />;

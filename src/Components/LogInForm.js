@@ -5,9 +5,10 @@ import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/InputText.css';
-import AlertContext from './AlertContext';
-import Loading from './Loading';
+import AllContext from './AllContext';
+import ErrorAlert from './ErrorAlert';
 export default class LogIn extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
 
@@ -36,52 +37,37 @@ export default class LogIn extends Component {
             password: this.state.password,
         };
         const baseUrl = '/api/v1/users/logIn';
+        const { setAlert, setRedirect, setAuth } =
+            this.context;
         try {
-            this.setState({ loading: true, error: '' });
+            setAlert('loading', true);
+            this.setState({ error: '' });
             const response = await axios.post(
                 baseUrl,
                 user
             );
-            localStorage.setItem(
-                'userName',
-                response.data.userName
-            );
-            localStorage.setItem(
-                'token',
-                response.data.token
-            );
-            localStorage.setItem('loggedIn', true);
-            this.setState({
-                doRedirect: true,
-            });
-            this.context.setAuth(
+            setRedirect(true);
+            setAuth(
                 true,
                 response.data.userName,
                 response.data.token
             );
         } catch (err) {
-            console.log(err.response.data.message);
             this.setState({
                 error: err.response.data.message,
             });
         }
-        this.setState({ loading: false });
-    };
-    stateChange = () => {
-        this.setState({
-            doRedirect: false,
-        });
+        setAlert('loading', false);
     };
     render() {
-        if (this.state.doRedirect) {
-            this.stateChange();
-            //window.open('/', '_self');
+        const { doRedirect, setRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
             return <Navigate to="/" />;
         }
         return (
             <>
                 <form onSubmit={this.handleSubmitChange}>
-                    <Loading loading={this.state.loading} />
                     <input
                         required
                         type="text"
@@ -100,24 +86,11 @@ export default class LogIn extends Component {
                     />
                     <button type="submit">Log In</button>
                 </form>
-
-                {this.state.error && (
-                    <div
-                        name="errorbox"
-                        className="errorAlertBox"
-                        wrap="hard"
-                    >
-                        <span
-                            className="closebtn"
-                            onClick={this.ResetError}
-                        >
-                            &times;
-                        </span>
-                        {this.state.error}
-                    </div>
-                )}
+                <ErrorAlert
+                    error={this.state.error}
+                    ResetError={this.ResetError}
+                />
             </>
         );
     }
 }
-LogIn.contextType = AlertContext;

@@ -1,7 +1,7 @@
 //import SignUpForm from '../Components/SignUpForm.js';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import AlertContext from '../Components/AlertContext.js';
+import AllContext from '../Components/AllContext.js';
 import LogInForm from '../Components/LogInForm.js';
 //import Navbar from '../Components/Navbar.js';
 import SignUpForm from '../Components/SignUpForm.js';
@@ -64,4 +64,4 @@ export default class SignUp extends Component {
         );
     }
 }
-SignUp.contextType = AlertContext;
+SignUp.contextType = AllContext;

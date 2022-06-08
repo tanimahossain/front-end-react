@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import '../App.css';
 import StoryUpdateButtons from '../Components/StoryUpdateButtons.js';
 import '../styles/Story.css';
-import Loading from './Loading.js';
+import AllContext from './AllContext';
 function PrintAStory(props) {
     return (
         <div className="container">
@@ -11,6 +12,7 @@ function PrintAStory(props) {
                 <div className="story-info">
                     <StoryUpdateButtons
                         story={props.story}
+                        storyId={props.storyId}
                     />
                 </div>
             </div>
@@ -19,6 +21,7 @@ function PrintAStory(props) {
 }
 
 class UpdateFullStory extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
         //console.log(props);
@@ -29,33 +32,36 @@ class UpdateFullStory extends Component {
     }
     //shouldComponentUpdate = () => false;
     async componentDidMount() {
+        const { setAlert, setRedirect } = this.context;
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
-        axios.defaults.headers = {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache',
-            Expires: '0',
-        };
+        setAlert('loading', true);
         try {
-            this.setState({
-                loading: true,
-            });
             const response = await axios.get(baseUrl);
             this.setState({
                 ViewList: response.data.storyData,
             });
         } catch (err) {
-            //
+            alert(err);
+            setRedirect(true);
         }
-        this.setState({ loading: false });
+        setAlert('loading', false);
     }
     render() {
         const { ViewList } = this.state;
-        //console.log(ViewList);
+        const { setRedirect, doRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
+            const baseUrl =
+                '/stories/' + this.props.storyId;
+            <Navigate to={baseUrl} />;
+        }
         return (
             <>
-                <Loading loading={this.state.loading} />
-                <PrintAStory story={ViewList} />
+                <PrintAStory
+                    story={ViewList}
+                    storyId={this.props.storyId}
+                />
             </>
         );
     }

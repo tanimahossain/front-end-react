@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
     BrowserRouter,
     Navigate,
@@ -6,7 +7,7 @@ import {
     Routes
 } from 'react-router-dom';
 import './App.css';
-import { AlertProvider } from './Components/AlertContext.js';
+import { AllProvider } from './Components/AllContext.js';
 import Layout from './Components/Layout.js';
 import HomePage from './Pages/HomePage.js';
 import PostStoryPage from './Pages/PostStoryPage.js';
@@ -15,11 +16,15 @@ import SignUpLogIn from './Pages/SignUpLogIn.js';
 import StoryDetails from './Pages/StoryDetails.js';
 import UpdateStory from './Pages/UpdateStory.js';
 import UserUpdatePage from './Pages/UserUpdatePage.js';
-
 function App() {
+    axios.defaults.headers = {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        Expires: '0',
+    };
     return (
         <>
-            <AlertProvider>
+            <AllProvider>
                 <BrowserRouter>
                     <Layout>
                         <Routes>
@@ -67,7 +72,7 @@ function App() {
                         </Routes>
                     </Layout>
                 </BrowserRouter>
-            </AlertProvider>
+            </AllProvider>
         </>
     );
 }
