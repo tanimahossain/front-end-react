@@ -14,7 +14,8 @@ export default class UserButtons extends Component {
         };
     }
     handleDeleteChange = async () => {
-        const { LogOut } = this.context;
+        const { LogOut, setAlert, setRedirect } =
+            this.context;
         const user = {};
         const config = {
             headers: {
@@ -27,22 +28,36 @@ export default class UserButtons extends Component {
         const baseUrl = '/api/v1/users/';
         //const navigate = useNavigate();
         try {
-            this.setState({ loading: true });
+            setAlert('loading', true);
             await axios.delete(baseUrl, config, user);
-            this.setState({ loading: false });
             LogOut();
             alert('User deleted!');
+            setAlert('loading', false);
 
-            this.setState({ doRedirect: true });
-        } catch {
+            setRedirect(true);
+        } catch (err) {
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                alert(err);
+            }
             //console.log(err);
         }
     };
     render() {
-        const { isLoggedIn } = this.context;
+        const {
+            isLoggedIn,
+            userName,
+            doRedirect,
+            setRedirect,
+        } = this.context;
+        const { user } = this.props;
+        console.log(user, userName);
         if (!isLoggedIn) return;
-        if (this.state.doRedirect) {
-            this.setState({ doRedirect: false });
+        if (userName !== this.props.user.userName) return;
+        if (doRedirect) {
+            setRedirect(false);
             return <Navigate to="/" />;
         }
         return (
@@ -60,9 +75,7 @@ export default class UserButtons extends Component {
                     </Link>
                     <button
                         className="DeleteUserbtn"
-                        onClick={() =>
-                            this.handleDeleteChange
-                        }
+                        onClick={this.handleDeleteChange}
                     >
                         Delete User
                     </button>

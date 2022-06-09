@@ -10,7 +10,7 @@ export default class StoryButtons extends Component {
         super(props);
         this.state = {
             ViewList: {},
-            storyId: props.story.storyId,
+            storyId: this.props.storyId,
         };
     }
     handleDeleteChange = async () => {
@@ -26,7 +26,7 @@ export default class StoryButtons extends Component {
         const { LogOut, setRedirect, setAlert } =
             this.context;
         const baseUrl =
-            '/api/v1/stories/' + this.state.storyId;
+            '/api/v1/stories/' + this.props.storyId;
         setAlert('loading', true);
         try {
             await axios.delete(baseUrl, config, story);
@@ -36,7 +36,9 @@ export default class StoryButtons extends Component {
             if (err.response.status === 401) {
                 LogOut();
             }
-            alert(err);
+            if (err.response.status !== 404) {
+                alert(err);
+            }
         }
         setAlert('loading', false);
     };

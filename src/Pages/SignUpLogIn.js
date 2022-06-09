@@ -1,5 +1,6 @@
 //import SignUpForm from '../Components/SignUpForm.js';
 import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AllContext from '../Components/AllContext.js';
 import LogInForm from '../Components/LogInForm.js';
@@ -8,6 +9,7 @@ import SignUpForm from '../Components/SignUpForm.js';
 import '../styles/SignUp.css';
 
 export default class SignUp extends Component {
+    static contextType = AllContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +35,10 @@ export default class SignUp extends Component {
             localStorage.removeItem('errorAlert');
         }
         console.log(this.context);
+        const { isLoggedIn } = this.context;
+        if (isLoggedIn) {
+            return <Navigate to="/" />;
+        }
         return (
             <>
                 <div className="SignUpLogInBox">

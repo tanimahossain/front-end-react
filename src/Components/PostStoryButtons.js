@@ -30,7 +30,8 @@ export default class PostStoryButtons extends Component {
     };
     handleUpdateChange = async (event) => {
         event.preventDefault();
-        const { setAlert, setRedirect } = this.context;
+        const { setAlert, setRedirect, LogOut } =
+            this.context;
         const story = {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
@@ -55,9 +56,13 @@ export default class PostStoryButtons extends Component {
             });
             setRedirect(true);
         } catch (err) {
-            this.setState({
-                error: err.response.data.message,
-            });
+            if (err.response.status === 401) {
+                LogOut();
+            } else if (err.response.status !== 404) {
+                this.setState({
+                    error: err.response.data.message,
+                });
+            }
         }
         setAlert('loading', false);
     };
@@ -74,6 +79,10 @@ export default class PostStoryButtons extends Component {
         if (doRedirect) {
             setRedirect(false);
             return <Navigate to={this.state.url} />;
+        }
+        console.log(isLoggedIn);
+        if (!isLoggedIn) {
+            return <Navigate to="/" />;
         }
         return (
             <div className="container">

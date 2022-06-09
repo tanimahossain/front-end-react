@@ -1,32 +1,45 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import '../App.css';
 import AllContext from './AllContext';
 import PrintStories from './PrintStories.js';
-
 class Stories extends Component {
     static contextType = AllContext;
     constructor(props) {
         super(props);
         this.state = {
             stories: [],
-            loading: false,
             currentPage: 1,
             storiesPerPage: 5,
         };
     }
     async componentDidMount() {
-        const { setAlert } = this.context;
+        const { setAlert, setRedirect, LogOut } =
+            this.context;
         setAlert('loading', true);
         try {
             const response = await axios.get(
                 '/api/v1/stories/'
             );
+            const List = response.data.storyData;
+            List.sort(function (a, b) {
+                return (
+                    new Date(b.createdAt) -
+                    new Date(a.createdAt)
+                );
+            });
             this.setState({
-                stories: response.data.storyData,
+                stories: List,
             });
         } catch (err) {
-            alert(err);
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                alert(err);
+            }
+            setRedirect(true);
         }
         setAlert('loading', false);
     }
@@ -46,6 +59,11 @@ class Stories extends Component {
             indexOfFirstPost,
             indexOfLastPost
         );
+        const { doRedirect, setRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
+            return <Navigate to="/" />;
+        }
         return (
             <>
                 <PrintStories

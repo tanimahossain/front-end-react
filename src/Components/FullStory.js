@@ -12,7 +12,10 @@ function PrintAStory(props) {
         <div className="container">
             <div className="storyDetails">
                 <div className="story-info">
-                    <StoryTitle story={props.story} />
+                    <StoryTitle
+                        story={props.story}
+                        flag={true}
+                    />
                     <div className="storyDate-text">
                         Created at: &emsp;&emsp;&ensp;
                         <GetDate
@@ -50,10 +53,8 @@ class FullStory extends Component {
         };
     }
     async componentDidMount() {
-        const { setRedirect, setAlert } = this.context;
-        this.setState({
-            loading: true,
-        });
+        const { setRedirect, setAlert, LogOut } =
+            this.context;
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
         setAlert('loading', true);
@@ -63,7 +64,12 @@ class FullStory extends Component {
                 ViewList: response.data.storyData,
             });
         } catch (err) {
-            alert(err);
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                alert(err.response.data.message);
+            }
             setRedirect(true);
         }
         setAlert('loading', false);

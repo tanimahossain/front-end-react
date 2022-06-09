@@ -9,14 +9,15 @@ export default class StoryUpdateButtons extends Component {
     static contextType = AllContext;
     constructor(props) {
         super(props);
-        //console.log(props);
+        console.log(props);
         this.state = {
             storyId: this.props.story.storyId,
             storyTitle: this.props.story.storyTitle,
             storyDescription:
                 this.props.story.storyDescription,
-            hereRedirect: false,
+            redirectUrl: '/stories/' + this.props.storyId,
         };
+        console.log(this.state.redirectUrl);
     }
     ResetError = () => {
         this.setState({
@@ -28,12 +29,13 @@ export default class StoryUpdateButtons extends Component {
             [event.target.name]: event.target.value,
         });
     };
-    handleUpdateChange = async () => {
+    handleUpdateChange = async (event) => {
+        event.preventDefault();
         const story = {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
         };
-        const { setAlert, setRedirect, token } =
+        const { setAlert, setRedirect, token, LogOut } =
             this.context;
         setAlert('loading', true);
         const config = {
@@ -45,29 +47,39 @@ export default class StoryUpdateButtons extends Component {
             '/api/v1/stories/' + this.props.story.storyId;
         try {
             await axios.put(baseUrl, story, config);
-            //setRedirect(true);
+            setRedirect(true);
             this.setState({
                 hereRedirect: true,
             });
         } catch (err) {
-            console.log(err);
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                this.setState({
+                    error: err.response.data.message,
+                });
+            }
         }
         setAlert('loading', false);
     };
     render() {
         const baseUrl = '/stories/' + this.props.storyId;
-        const { doRedirect, setRedirect } = this.context;
+        const { doRedirect, setRedirect, isLoggedIn } =
+            this.context;
         console.log(
             'baseUrl: ',
             baseUrl,
+            this.state.redirectUrl,
             this.state.hereRedirect,
             this.props.storyId
         );
-        if (this.state.hereRedirect) {
-            this.setState({
-                hereRedirect: false,
-            });
+        if (doRedirect) {
+            setRedirect(false);
             return <Navigate to={baseUrl} />;
+        }
+        if (!isLoggedIn) {
+            return <Navigate to="/" />;
         }
         return (
             <>

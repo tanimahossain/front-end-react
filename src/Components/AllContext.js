@@ -1,10 +1,7 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 const AllContext = React.createContext();
 
-// export function useAllContext() {
-//     return useContext(AllContext);
-// }
-//static contextType = AllContext
 export class AllProvider extends Component {
     constructor(props) {
         super(props);
@@ -42,11 +39,6 @@ export class AllProvider extends Component {
             userName: uname,
             token: jwtToken,
         });
-        console.log(
-            this.state.isLoggedIn,
-            this.state.userName,
-            this.state.token
-        );
     };
     setAlert = (name, value) => {
         if (name === 'loading') {
@@ -72,6 +64,37 @@ export class AllProvider extends Component {
             return this.state.errorAlert;
         }
     };
+    async componentDidMount() {
+        const user = {};
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem(
+                    'token',
+                    false
+                )}`,
+            },
+        };
+        const baseUrl = '/api/v1/users/verify';
+        try {
+            this.setAlert('loading', true);
+            this.setState({ error: '' });
+            const response = await axios.post(
+                baseUrl,
+                user,
+                config
+            );
+            this.setAuth(
+                true,
+                response.data.userName,
+                response.data.token
+            );
+            this.setAlert('loading', false);
+        } catch (err) {
+            if (err.response.status === 401) {
+                this.LogOut();
+            }
+        }
+    }
     render() {
         const {
             isLoading,

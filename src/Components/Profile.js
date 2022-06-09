@@ -20,7 +20,7 @@ function PrintAUser(props) {
                             />
                         </div>
                     </div>
-                    <UserButtons />
+                    <UserButtons user={props.user} />
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@ class Profile extends Component {
         };
     }
     async componentDidMount() {
-        const { setAlert } = this.context;
+        const { setAlert, LogOut } = this.context;
         const baseUrl =
             '/api/v1/users/' + this.state.userId;
         setAlert('loading', true);
@@ -50,7 +50,12 @@ class Profile extends Component {
                 ViewList: response.data.userData,
             });
         } catch (err) {
-            alert(err);
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                alert(err);
+            }
             this.setState({
                 doRedirect: true,
             });

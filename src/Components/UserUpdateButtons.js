@@ -9,7 +9,6 @@ export default class PostStoryButtons extends Component {
     static contextType = AllContext;
     constructor(props) {
         super(props);
-        //console.log(props);
         this.state = {
             fullName: '',
             password: '',
@@ -35,6 +34,7 @@ export default class PostStoryButtons extends Component {
             token,
             userName,
             setRedirect,
+            LogOut,
         } = this.context;
         event.preventDefault();
         this.setState({
@@ -84,9 +84,14 @@ export default class PostStoryButtons extends Component {
             }
             setRedirect(true);
         } catch (err) {
-            this.setState({
-                error: err.response.data.message,
-            });
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                this.setState({
+                    error: err.response.data.message,
+                });
+            }
         }
         setAlert('loading', false);
     };
@@ -103,6 +108,9 @@ export default class PostStoryButtons extends Component {
         if (doRedirect) {
             setRedirect(false);
             return <Navigate to={baseUrl} />;
+        }
+        if (!isLoggedIn) {
+            return <Navigate to="/" />;
         }
         return (
             <>

@@ -24,37 +24,59 @@ class UpdateFullStory extends Component {
     static contextType = AllContext;
     constructor(props) {
         super(props);
-        //console.log(props);
         this.state = {
             ViewList: {},
             storyId: props.storyId,
         };
     }
-    //shouldComponentUpdate = () => false;
     async componentDidMount() {
-        const { setAlert, setRedirect } = this.context;
+        const {
+            setAlert,
+            setRedirect,
+            doRedirect,
+            LogOut,
+        } = this.context;
         const baseUrl =
             '/api/v1/stories/' + this.state.storyId;
         setAlert('loading', true);
+        console.log(doRedirect);
         try {
             const response = await axios.get(baseUrl);
             this.setState({
                 ViewList: response.data.storyData,
             });
         } catch (err) {
-            alert(err);
+            if (err.response.status === 401) {
+                LogOut();
+            }
+            if (err.response.status !== 404) {
+                alert(err);
+            }
             setRedirect(true);
         }
         setAlert('loading', false);
     }
     render() {
         const { ViewList } = this.state;
-        const { setRedirect, doRedirect } = this.context;
+        const {
+            setRedirect,
+            doRedirect,
+            isLoggedIn,
+            userName,
+        } = this.context;
         if (doRedirect) {
             setRedirect(false);
             const baseUrl =
                 '/stories/' + this.props.storyId;
-            <Navigate to={baseUrl} />;
+            return <Navigate to={baseUrl} />;
+        }
+        if (
+            !isLoggedIn ||
+            userName !== ViewList.authorUsername
+        ) {
+            const baseUrl =
+                '/stories/' + this.props.storyId;
+            return <Navigate to={baseUrl} />;
         }
         return (
             <>

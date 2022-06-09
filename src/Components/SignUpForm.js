@@ -32,8 +32,8 @@ export default class SignUp extends Component {
     };
     handleSubmitChange = async (event) => {
         event.preventDefault();
-        const { setState } = this;
         const { password, confirmPassword } = this.state;
+        console.log('pre post');
         if (password !== confirmPassword) {
             this.setState({
                 error: "Passwords doesn't match each other",
@@ -51,9 +51,10 @@ export default class SignUp extends Component {
             this.context;
         try {
             setAlert('loading', true);
-            setState({
+            this.setState({
                 error: '',
             });
+            console.log('pre post');
             const response = await axios.post(
                 baseUrl,
                 user
@@ -66,9 +67,12 @@ export default class SignUp extends Component {
             );
             alert('User Created Succesfully');
         } catch (err) {
-            setState({
-                error: err.response.data.message,
-            });
+            console.log('err', err);
+            if (err.response.status !== 404) {
+                this.setState({
+                    error: err.response.data.message,
+                });
+            }
         }
         setAlert('loading', false);
     };
