@@ -13,6 +13,9 @@ function PrintAStory(props) {
                     <StoryUpdateButtons
                         story={props.story}
                         storyId={props.storyId}
+                        setMyStoryEdit={
+                            props.setMyStoryEdit
+                        }
                     />
                 </div>
             </div>
@@ -58,22 +61,9 @@ class UpdateFullStory extends Component {
     }
     render() {
         const { ViewList } = this.state;
-        const {
-            setRedirect,
-            doRedirect,
-            isLoggedIn,
-            userName,
-        } = this.context;
+        const { setRedirect, doRedirect } = this.context;
         if (doRedirect) {
             setRedirect(false);
-            const baseUrl =
-                '/stories/' + this.props.storyId;
-            return <Navigate to={baseUrl} />;
-        }
-        if (
-            !isLoggedIn ||
-            userName !== ViewList.authorUsername
-        ) {
             const baseUrl =
                 '/stories/' + this.props.storyId;
             return <Navigate to={baseUrl} />;
@@ -83,6 +73,9 @@ class UpdateFullStory extends Component {
                 <PrintAStory
                     story={ViewList}
                     storyId={this.props.storyId}
+                    setMyStoryEdit={
+                        this.props.setMyStoryEdit
+                    }
                 />
             </>
         );

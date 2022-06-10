@@ -238,7 +238,7 @@ nav {
   float: inline-end;
   padding-top: 30px;
   font-size: 16px;
-  white-space: pre-line;
+  white-space: pre-wrap;
 }
 .storyOpeningLines {
   float: inline-end;

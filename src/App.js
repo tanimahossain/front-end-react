@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Modal from 'react-modal';
 import {
     BrowserRouter,
     Navigate,
@@ -14,9 +15,10 @@ import PostStoryPage from './Pages/PostStoryPage.js';
 import ProfilePage from './Pages/ProfilePage.js';
 import SignUpLogIn from './Pages/SignUpLogIn.js';
 import StoryDetails from './Pages/StoryDetails.js';
-import UpdateStory from './Pages/UpdateStory.js';
 import UserUpdatePage from './Pages/UserUpdatePage.js';
+Modal.setAppElement('#root');
 function App() {
+    window['console']['warning'] = function () {};
     axios.defaults.headers = {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
@@ -42,11 +44,6 @@ function App() {
                                 path="/stories/:id"
                                 exact
                                 element={<StoryDetails />}
-                            />
-                            <Route
-                                path="/stories/:id/edit"
-                                exact
-                                element={<UpdateStory />}
                             />
                             <Route
                                 path="/users/"
@@ -76,5 +73,11 @@ function App() {
         </>
     );
 }
+/*
 
+                            <Route
+                                path="/stories/:id/edit"
+                                exact
+                                element={<UpdateStory />}
+                            />*/
 export default App;

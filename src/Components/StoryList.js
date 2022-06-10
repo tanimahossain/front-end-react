@@ -48,6 +48,13 @@ class Stories extends Component {
             currentPage: page,
         });
     };
+    navigate = () => {
+        const { doRedirect, setRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
+            return <Navigate to="/" />;
+        }
+    };
     render() {
         const { stories } = this.state;
         const indexOfLastPost =
@@ -59,6 +66,7 @@ class Stories extends Component {
             indexOfFirstPost,
             indexOfLastPost
         );
+        () => this.navigate();
         const { doRedirect, setRedirect } = this.context;
         if (doRedirect) {
             setRedirect(false);

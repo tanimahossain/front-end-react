@@ -13,6 +13,7 @@ export class AllProvider extends Component {
             isLoggedIn: localStorage.getItem('isLoggedIn'),
             userName: localStorage.getItem('userName'),
             token: localStorage.getItem('token'),
+            storyIds: [],
         };
     }
     setRedirect = (val) => {
@@ -94,6 +95,7 @@ export class AllProvider extends Component {
                 this.LogOut();
             }
         }
+        this.setAlert('loading', false);
     }
     render() {
         const {
@@ -104,6 +106,7 @@ export class AllProvider extends Component {
             userName,
             token,
             doRedirect,
+            storyIds,
         } = this.state;
         const {
             setAlert,
@@ -122,6 +125,7 @@ export class AllProvider extends Component {
                     userName,
                     token,
                     doRedirect,
+                    storyIds,
                     setAlert,
                     getAlert,
                     setAuth,

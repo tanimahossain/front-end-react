@@ -45,6 +45,13 @@ export default class UserButtons extends Component {
             //console.log(err);
         }
     };
+    navigate = () => {
+        const { doRedirect, setRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
+            return <Navigate to="/" />;
+        }
+    };
     render() {
         const {
             isLoggedIn,
@@ -56,6 +63,7 @@ export default class UserButtons extends Component {
         console.log(user, userName);
         if (!isLoggedIn) return;
         if (userName !== this.props.user.userName) return;
+        () => this.navigate();
         if (doRedirect) {
             setRedirect(false);
             return <Navigate to="/" />;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
 import AllContext from './AllContext';
@@ -35,8 +35,7 @@ export default class StoryUpdateButtons extends Component {
             storyTitle: this.state.storyTitle,
             storyDescription: this.state.storyDescription,
         };
-        const { setAlert, setRedirect, token, LogOut } =
-            this.context;
+        const { setAlert, token, LogOut } = this.context;
         setAlert('loading', true);
         const config = {
             headers: {
@@ -47,10 +46,10 @@ export default class StoryUpdateButtons extends Component {
             '/api/v1/stories/' + this.props.story.storyId;
         try {
             await axios.put(baseUrl, story, config);
-            setRedirect(true);
             this.setState({
                 hereRedirect: true,
             });
+            this.props.setMyStoryEdit(false);
         } catch (err) {
             if (err.response.status === 401) {
                 LogOut();
@@ -109,11 +108,14 @@ export default class StoryUpdateButtons extends Component {
                         wrap="hard"
                         required
                     />
-                    <Link to={baseUrl}>
-                        <button className="Cancelbtn">
-                            Cancel
-                        </button>
-                    </Link>
+                    <button
+                        className="Cancelbtn"
+                        onClick={() =>
+                            this.props.setMyStoryEdit(false)
+                        }
+                    >
+                        Cancel
+                    </button>
                     <button className="UpdateStorybtn">
                         Update
                     </button>

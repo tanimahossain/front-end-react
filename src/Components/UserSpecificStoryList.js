@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Navigate } from 'react-router-dom';
 import '../App.css';
 import AllContext from './AllContext';
 import PrintStories from './PrintStories.js';
@@ -49,6 +48,15 @@ class UserSpecificStoryList extends Component {
             currentPage: page,
         });
     };
+
+    navigate = () => {
+        const { doRedirect } = this.context;
+        if (doRedirect) {
+            window.open('/', '_self');
+            //setRedirect(false);
+            //return <Navigate to="/" />;
+        }
+    };
     render() {
         const { ViewList } = this.state;
         const stories = [];
@@ -69,10 +77,13 @@ class UserSpecificStoryList extends Component {
             indexOfFirstPost,
             indexOfLastPost
         );
-        const { doRedirect, setRedirect } = this.context;
+        const { doRedirect } = this.context;
+        () => this.navigate();
+
         if (doRedirect) {
-            setRedirect(false);
-            return <Navigate to="/" />;
+            window.open('/', '_self');
+            //setRedirect(false);
+            //return <Navigate to="/" />;
         }
         return (
             <>

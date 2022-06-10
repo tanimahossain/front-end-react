@@ -1,7 +1,6 @@
 import Modal from 'react-modal';
 import HashLoader from 'react-spinners/HashLoader';
 import '../App.css';
-Modal.setAppElement('#root');
 function Loading({ loading }) {
     console.log('askdh');
     return (

@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import '../App.css';
 import StoryButtons from '../Components/StoryButtons.js';
+import UpdateFullStory from '../Components/UpdateFullStory.js';
 import GetDate from '../utils/DateFormat';
 import AllContext from './AllContext';
 import StoryTitle from './StoryTitle.js';
 
 function PrintAStory(props) {
+    console.log(props.setMyStoryEdit.toString());
     return (
         <div className="container">
             <div className="storyDetails">
@@ -35,6 +37,9 @@ function PrintAStory(props) {
                         userName={
                             props.story.authorUsername
                         }
+                        setMyStoryEdit={
+                            props.setMyStoryEdit
+                        }
                     />
                 </div>
             </div>
@@ -50,8 +55,14 @@ class FullStory extends Component {
             ViewList: {},
             storyId: props.storyId,
             error: '',
+            myStoryEdit: false,
         };
     }
+    setMyStoryEdit = (val) => {
+        this.setState({
+            myStoryEdit: val,
+        });
+    };
     async componentDidMount() {
         const { setRedirect, setAlert, LogOut } =
             this.context;
@@ -83,7 +94,22 @@ class FullStory extends Component {
         } else
             return (
                 <>
-                    <PrintAStory story={ViewList} />
+                    {!this.state.myStoryEdit && (
+                        <PrintAStory
+                            story={ViewList}
+                            setMyStoryEdit={
+                                this.setMyStoryEdit
+                            }
+                        />
+                    )}
+                    {this.state.myStoryEdit && (
+                        <UpdateFullStory
+                            storyId={this.props.storyId}
+                            setMyStoryEdit={
+                                this.setMyStoryEdit
+                            }
+                        />
+                    )}
                 </>
             );
     }

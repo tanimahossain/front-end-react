@@ -59,7 +59,15 @@ export default class LogIn extends Component {
         }
         setAlert('loading', false);
     };
+    navigate = () => {
+        const { doRedirect, setRedirect } = this.context;
+        if (doRedirect) {
+            setRedirect(false);
+            return <Navigate to="/" />;
+        }
+    };
     render() {
+        () => this.navigate();
         const { doRedirect, setRedirect } = this.context;
         if (doRedirect) {
             setRedirect(false);

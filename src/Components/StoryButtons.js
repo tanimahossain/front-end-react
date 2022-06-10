@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import '../App.css';
 import '../styles/Story.css';
 import AllContext from './AllContext';
@@ -55,9 +54,8 @@ export default class StoryButtons extends Component {
             setRedirect(false);
             return <Navigate to="/" />;
         }
-        const baseUrl =
-            '/stories/' + this.props.storyId + '/edit';
-        console.log(baseUrl);
+        console.log(this.props.setMyStoryEdit.toString());
+        const { setMyStoryEdit } = this.props;
         return (
             <>
                 <button
@@ -66,11 +64,12 @@ export default class StoryButtons extends Component {
                 >
                     Delete Story
                 </button>
-                <Link to={baseUrl}>
-                    <button className="UpdateStorybtn">
-                        Update Story
-                    </button>
-                </Link>
+                <button
+                    className="UpdateStorybtn"
+                    onClick={() => setMyStoryEdit(true)}
+                >
+                    Update Story
+                </button>
             </>
         );
     }

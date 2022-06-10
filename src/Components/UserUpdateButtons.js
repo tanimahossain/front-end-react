@@ -95,6 +95,24 @@ export default class PostStoryButtons extends Component {
         }
         setAlert('loading', false);
     };
+    navigate = () => {
+        const {
+            doRedirect,
+            isLoggedIn,
+            userName,
+            setRedirect,
+        } = this.context;
+        const baseUrl = isLoggedIn
+            ? '/users/' + userName
+            : '/homepage';
+        if (doRedirect) {
+            setRedirect(false);
+            return <Navigate to={baseUrl} />;
+        }
+        if (!isLoggedIn) {
+            return <Navigate to="/" />;
+        }
+    };
     render() {
         const {
             doRedirect,
@@ -105,6 +123,7 @@ export default class PostStoryButtons extends Component {
         const baseUrl = isLoggedIn
             ? '/users/' + userName
             : '/homepage';
+        () => this.navigate();
         if (doRedirect) {
             setRedirect(false);
             return <Navigate to={baseUrl} />;

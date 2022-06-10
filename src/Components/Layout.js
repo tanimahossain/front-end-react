@@ -22,6 +22,10 @@ import Loading from './Loading';
 import Navbar from './Navbar';
 class Layout extends Component {
     static contextType = AllContext;
+    componentDidMount() {
+        //const { setRedirect } = this.context;
+        //setRedirect(false);
+    }
     render() {
         const { isLoading } = this.context;
         return (
